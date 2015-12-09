@@ -9,9 +9,9 @@ from . import app_settings
 from .helpers import get_perm_name
 
 
-class TabularPermissions(FilteredSelectMultiple):
+class TabularPermissionsWidget(FilteredSelectMultiple):
     def __init__(self, verbose_name, is_stacked, attrs=None, choices=()):
-        super(TabularPermissions, self).__init__(verbose_name, is_stacked, attrs, choices)
+        super(TabularPermissionsWidget, self).__init__(verbose_name, is_stacked, attrs, choices)
         self.exclude_perms = []
 
     def render(self, name, value, attrs=None, choices=()):
@@ -70,11 +70,11 @@ class TabularPermissions(FilteredSelectMultiple):
         self.exclude_perms = excluded_perms
         # pdb.set_trace()
         # attrs['style'] = 'display:none;'
-        initial = super(TabularPermissions, self).render(name, value, attrs, choices)
+        initial = super(TabularPermissionsWidget, self).render(name, value, attrs, choices)
         response = u'%s <hr> %s' % (force_text(body), force_text(initial))
         return mark_safe(response)
 
     def render_option(self, selected_choices, option_value, option_label):
         if option_value in self.exclude_perms:
             return ''
-        return super(TabularPermissions, self).render_option(selected_choices, option_value, option_label)
+        return super(TabularPermissionsWidget, self).render_option(selected_choices, option_value, option_label)

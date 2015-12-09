@@ -10,3 +10,4 @@ else:
     TABULAR_PERMISSIONS_EXCLUDE_APPS = user_exclude.get('app', [])
 
 TABULAR_PERMISSIONS_EXCLUDE_MODELS = user_exclude.get('model', [])
+TABULAR_PERMISSIONS_AUTO_IMPLEMENT = getattr(settings, 'TABULAR_PERMISSIONS_AUTO_IMPLEMENT', True)
