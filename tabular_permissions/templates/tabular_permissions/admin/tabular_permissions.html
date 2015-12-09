@@ -1,0 +1,104 @@
+{% load i18n %}
+
+
+<table id="tabular_permissions" class="table table-condensed table-hover" cellspacing="0" width="100%">
+    <thead>
+    <tr>
+        <th> {% trans 'application' %}</th>
+        <th>{% trans 'model' %}</th>
+        <th>
+            <label>
+                {% trans 'can add' %}
+                <input type="checkbox" class="checkbox select-all"
+                       id="perm_add_select_all" >
+            </label>
+        </th>
+        <th>
+            <label>
+                {% trans 'can change' %}
+                <input type="checkbox" class="checkbox select-all"
+                       id="perm_change_select_all">
+                {% trans 'all' %}
+            </label>
+        </th>
+        <th>
+            <label>
+                {% trans 'can delete' %}
+                <input type="checkbox" class="checkbox select-all"
+                       id="perm_delete_select_all">
+                {% trans 'all' %}
+            </label>
+        </th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for app in apps_available %}
+
+        {% for model in app.models %}
+
+            <tr>
+                {% if forloop.counter0 == 0 %}
+                    <td rowspan="{{ app.models|length }}" class="app-name"
+                        data-app-name="{{ app.label }}">{{ app.verbose_name }}</td>
+                {% endif %}
+                <td>
+                    {{ model.verbose_name }}
+                </td>
+                <td class="add">
+                    <div class="input">
+                        <label>
+                            <input type="checkbox" class="checkbox"
+                                   id="id_{{ model.add_perm_name }}" data-perm-id="{{ model.add_perm_id }}"
+                                    {% if model.add_perm_id in user_permissions %}
+                                   checked="checked"
+                                    {% endif %}>
+                        </label>
+                    </div>
+                </td>
+                <td class="change">
+                    <div class="checkbox ">
+                        <label>
+                            <input type="checkbox" class="checkbox"
+                                   id="id_{{ model.change_perm_name }}" data-perm-id="{{ model.change_perm_id }}"
+                                    {% if model.change_perm_id in user_permissions %}
+                                   checked="checked"
+                                    {% endif %}>
+                        </label>
+                    </div>
+                </td>
+                <td class="delete">
+                    <div class="checkbox ">
+                        <label>
+                            <input type="checkbox" class="checkbox"
+                                   id="id_{{ model.delete_perm_name }}" data-perm-id="{{ model.delete_perm_id }}"
+                                    {% if model.delete_perm_id in user_permissions %}
+                                   checked="checked"
+                                    {% endif %}>
+                        </label>
+                    </div>
+                </td>
+            </tr>
+        {% endfor %}
+        {% if app.models %}
+            <tr>
+                <td colspan="5" class="user-permissions-app-separator"></td>
+            </tr>
+        {% endif %}
+
+
+    {% endfor %}
+    </tbody>
+</table>
+<hr/>
+<style>
+    .user-permissions-app-separator{
+        border-bottom: 1px solid black;
+    }
+    .app-name {
+        border-left: 1px black solid;
+    }
+
+    .related-widget-wrapper-user-permissions{
+        width: 90%;
+    }
+</style>
