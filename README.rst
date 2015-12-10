@@ -11,7 +11,10 @@ Features:
 * RTL ready, Bootstrap ready.
 * Easy customize-able look.
 * Tested on Django 1.8 & Django 1.9.
-* Works on Python 2 and Python 3.
+* Tested on Python 2.7, 3.4 & 3.5
+.. image:: https://travis-ci.org/RamezIssac/django-tabular-permissions.svg?branch=master
+    :target: https://travis-ci.org/RamezIssac/django-tabular-permissions
+
 
 Installation
 ------------
