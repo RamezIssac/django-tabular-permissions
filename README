@@ -42,3 +42,7 @@ If you have a custom UserAdmin, then set this option to False and make sure you 
 * Inherit from `TabularPermissionsAdmin` (from tabular_permissions.admin) before admin.ModelAdmin or UserAdmin,
 * Set the user_permissions widget to `tabular_permissions.widgets.TabularPermissionsWidget`
 
+
+Customizing display:
+--------------------
+Override or extend template ,

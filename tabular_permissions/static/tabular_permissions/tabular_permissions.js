@@ -21,18 +21,20 @@
         });
         $('form').on('submit', function () {
             var user_perms = [];
-            $('#tabular_permissions').find("input[type=checkbox]").not('.select-all').each(function (i, elem) {
+            var table_permissions = $('#tabular_permissions');
+            var input_name = table_permissions.attr('data-input-name');
+            table_permissions.find("input[type=checkbox]").not('.select-all').each(function (i, elem) {
                 var $elem = $(elem);
                 if ($(elem).prop('checked')) {
                     user_perms.push($elem.attr('data-perm-id'))
                 }
             });
-            var user_permissions = $('[name=user_permissions]');
+            var user_group_permissions = $('[name=' + input_name +']');
             var output = [];
             $.each(user_perms, function (key, value) {
                 output.push('<option value="' + value + '" selected="selected" style="display:none"></option>');
             });
-            user_permissions.append(output);
+            user_group_permissions.append(output);
         })
     });
     })(django.jQuery);
