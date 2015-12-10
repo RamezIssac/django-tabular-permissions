@@ -1,0 +1,48 @@
+# django-tabular-permissions
+Display Django basic permissions (add, change & delete) in a tabular format that is user friendly, translatable and easy customized.
+If you have more customised permissions, the default `FilteredSelectMultiple` widget will also appear to handle those permissions.
+
+Installation
+------------
+...to be updated
+
+Usage:
+------
+add "tabular_permissions" to your INSTALLED_APPS setting like this::
+
+    INSTALLED_APPS = [
+        ...
+        'tabular_permissions',
+    ]
+
+
+Configurations
+--------------
+
+`TABULAR_PERMISSIONS_EXCLUDE`
+
+By default tabulat_permssions exclude apps `sessions` , `contenttypes` and `admin` apps from 
+showing their models in teh permissions table.
+You can add (or override) those apps and/or specify models to exclude
+in our settings.py add :
+    TABULAR_PERMISSIONS_EXCLUDE = {
+        'app': [],
+        'model': [],
+        'override': False # or set to True to override default behaviour.
+    }
+    
+    
+    
+`TABULAR_PERMISSIONS_AUTO_IMPLEMENT`:
+
+By default, just by including `tabular_permissions` in your installed_apps, the `django.contrib.admin.UserAdmin` (and `GroupAdmin`)
+is "patched" to include the tabular_permissions widget.
+If you have a custom UserAdmin, then set this option to False and make sure you either :
+* Inherit from `TabularPermissionsUserAdmin` , or ,
+* Inherit from `TabularPermissionsAdmin` (from tabular_permissions.admin) before admin.ModelAdmin or UserAdmin,
+* Set the user_permissions widget to `tabular_permissions.widgets.TabularPermissionsWidget`
+
+
+Customizing display:
+--------------------
+Override or extend template ,

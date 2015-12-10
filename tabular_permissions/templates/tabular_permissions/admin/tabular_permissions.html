@@ -1,0 +1,115 @@
+{% load i18n %}
+
+<table id="tabular_permissions" class="table table-condensed table-striped table-hover" cellspacing="0" width="100%" data-input-name="{{ input_name }}">
+    <thead>
+    <tr>
+        <th> {% trans 'application' %}</th>
+        <th>{% trans 'model' %}</th>
+        <th>
+            {% trans 'can add' %}
+            <label>
+                <input type="checkbox" class="checkbox select-all add"
+                       id="perm_add_select_all">
+                {% trans 'select all' %}
+            </label>
+        </th>
+        <th>
+            {% trans 'can change' %}
+            <label>
+                <input type="checkbox" class="checkbox select-all change"
+                       id="perm_change_select_all">
+                {% trans 'select all' %}
+            </label>
+        </th>
+        <th>
+            {% trans 'can delete' %}
+            <label>
+                <input type="checkbox" class="checkbox select-all delete"
+                       id="perm_delete_select_all">
+                {% trans 'select all' %}
+            </label>
+        </th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for app in apps_available %}
+
+        {% for model in app.models %}
+
+            <tr class="{% cycle 'row1' 'row2' %}">
+
+                {% if forloop.counter0 == 0 %}
+                    <td rowspan="{{ app.models|length }}" class="app-name{% if LANGUAGE_BIDI %}-rtl {% endif %}"
+                        data-app-name="{{ app.label }}">{{ app.verbose_name }}</td>
+                {% endif %}
+                <td>
+                    {{ model.verbose_name }}
+                </td>
+                <td class="add">
+                    <div class="input">
+                        <label>
+                            <input type="checkbox" class="checkbox add"
+                                   id="id_{{ model.add_perm_name }}" data-perm-id="{{ model.add_perm_id }}"
+                                    {% if model.add_perm_id in user_permissions %}
+                                   checked="checked"
+                                    {% endif %}>
+                        </label>
+                    </div>
+                </td>
+                <td class="change">
+                    <div class="checkbox ">
+                        <label>
+                            <input type="checkbox" class="checkbox change"
+                                   id="id_{{ model.change_perm_name }}" data-perm-id="{{ model.change_perm_id }}"
+                                    {% if model.change_perm_id in user_permissions %}
+                                   checked="checked"
+                                    {% endif %}>
+                        </label>
+                    </div>
+                </td>
+                <td class="delete">
+                    <div class="checkbox ">
+                        <label>
+                            <input type="checkbox" class="checkbox delete"
+                                   id="id_{{ model.delete_perm_name }}" data-perm-id="{{ model.delete_perm_id }}"
+                                    {% if model.delete_perm_id in user_permissions %}
+                                   checked="checked"
+                                    {% endif %}>
+                        </label>
+                    </div>
+                </td>
+            </tr>
+        {% endfor %}
+        {% if app.models %}
+            <tr>
+                <td colspan="5" class="user-permissions-app-separator"></td>
+            </tr>
+        {% endif %}
+
+
+    {% endfor %}
+    </tbody>
+</table>
+<hr/>
+{% block style %}
+{#    Seems a waste to request those couple of sad lines from the server as separate css file #}
+<style>
+    .user-permissions-app-separator{
+        border-bottom: 1px solid black;
+    }
+
+    .app-name-rtl {
+        border-left: 1px black solid;
+    }
+    .app-name {
+        border-right: 1px black solid;
+    }
+    th{
+        text-decoration: underline;
+    }
+
+    .related-widget-wrapper-user-permissions{
+        width: 90%;
+    }
+</style>
+{% endblock %}
