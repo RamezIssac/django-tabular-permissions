@@ -12,6 +12,7 @@ from .helpers import get_perm_name
 
 
 class TabularPermissionsWidget(FilteredSelectMultiple):
+
     class Media:
         js = ('tabular_permissions/tabular_permissions.js',)
 
@@ -39,6 +40,8 @@ class TabularPermissionsWidget(FilteredSelectMultiple):
                         'models': []}
 
             for model_name in app.models:
+                model = app.models[model_name]
+
                 add_perm_name = get_perm_name(model_name, 'add')
                 change_perm_name = get_perm_name(model_name, 'change')
                 delete_perm_name = get_perm_name(model_name, 'delete')
@@ -48,7 +51,8 @@ class TabularPermissionsWidget(FilteredSelectMultiple):
                 delete_perm_id = codename_id_map.get(delete_perm_name, False)
 
                 if app.label in app_settings.TABULAR_PERMISSIONS_EXCLUDE_APPS \
-                        or model_name in app_settings.TABULAR_PERMISSIONS_EXCLUDE_MODELS:
+                        or model_name in app_settings.TABULAR_PERMISSIONS_EXCLUDE_MODELS \
+                        or app_settings.TABULAR_PERMISSIONS_EXCLUDE_FUNCTION(model):
                     excluded_perms.extend([add_perm_id, change_perm_id, delete_perm_id])
                     reminder_perms.pop(add_perm_name)
                     reminder_perms.pop(change_perm_name)
@@ -56,7 +60,6 @@ class TabularPermissionsWidget(FilteredSelectMultiple):
                     continue
 
                 if add_perm_id and change_perm_id and delete_perm_id:
-                    model = app.models[model_name]
                     app_dict['models'].append({
                         'model': model,
                         'verbose_name_plural': force_text(model._meta.verbose_name_plural),
@@ -83,12 +86,15 @@ class TabularPermissionsWidget(FilteredSelectMultiple):
 
         # Get "original" FilteredSelectMultiple, and hide it if necessary.
         # Next block is a "copy" of FilteredSelectMultiple render(), except the if reminder_perms: check.
+
         if attrs is None:
             attrs = {}
         attrs['class'] = 'selectfilter'
         if self.is_stacked:
             attrs['class'] += 'stacked'
+
         output = [super(FilteredSelectMultiple, self).render(name, value, attrs, choices)]
+        # pdb.set_trace()
         if reminder_perms:
             output.append('<script type="text/javascript">addEvent(window, "load", function(e) {')
             # TODO: "id_" is hard-coded here. This should instead use the correct
