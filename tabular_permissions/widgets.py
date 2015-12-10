@@ -110,7 +110,7 @@ class TabularPermissionsWidget(FilteredSelectMultiple):
                               % (name, escapejs(self.verbose_name), int(self.is_stacked)))
 
         initial = mark_safe(''.join(output))
-        response = u'%s <hr/> %s' % (body, initial)
+        response = ' <hr/>'.join([force_text(body), force_text(initial)])
         return mark_safe(response)
 
     def render_option(self, selected_choices, option_value, option_label):
