@@ -7,6 +7,10 @@ env:
   - DJANGO=django==1.8.7
   - DJANGO=django==1.9.0
 # command to install dependencies
-install: "pip install -r tests/requirements.txt"
-# command to run tests
-script: tests/runtests
+install:
+    - pip install -r tests/requirements.txt
+    - pip install $DJANGO
+    - pip install coveralls
+script:
+    - cd tests/
+    - python runtests.py
