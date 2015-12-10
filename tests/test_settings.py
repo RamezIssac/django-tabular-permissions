@@ -1,3 +1,7 @@
+import os, sys
+
+BASE_DIR = os.path.abspath(os.path.dirname(__file__))
+sys.path.append(os.path.abspath(os.path.join(BASE_DIR, '..')))
 
 SECRET_KEY = 'fake-key'
 
@@ -8,6 +12,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.admin',
+    'django.contrib.sites',
+
     'tabular_permissions',
 
 ]
@@ -35,3 +41,5 @@ MIDDLEWARE_CLASSES = (
 )
 
 STATIC_URL = '/static/'
+
+SITE_ID = 1
