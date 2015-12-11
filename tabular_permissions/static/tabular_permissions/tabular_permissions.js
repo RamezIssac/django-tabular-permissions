@@ -19,6 +19,12 @@
                 $(e).prop('checked', state)
             })
         });
+        $('.select-all.select-row').on('change', function(){
+            var $this = $(this);
+            $this.parents('tr').find('.checkbox').not('.select-all').each(function(i,elem){
+                $(elem).prop('checked', $this.prop('checked'));
+            })
+        });
         $('form').on('submit', function () {
             var user_perms = [];
             var table_permissions = $('#tabular_permissions');
