@@ -2,6 +2,7 @@ django-tabular-permissions
 ##########################
 Display Django basic permissions (add, change & delete) in a tabular format that is user friendly, translatable and easy customized.
 If you have more customised permissions, the default `FilteredSelectMultiple` widget will also appear to handle those permissions.
+Scroll down from some screen shots.
 
 Features:
 ---------
@@ -67,5 +68,26 @@ If you have a custom UserAdmin, then set this option to False and make sure you 
 Default to 'tabular_permissions/admin/tabular_permissions.html`.
 You can either extend or override this template for maximum control.
 
+Screenshots:
+------------
+Basic Demo
+
+.. image:: http://i.imgsafe.org/2559bdc.jpeg
+    :target: http://i.imgsafe.org/2559bdc.jpeg
+    :alt: Basic demo
+
+With Custom permission behaviour
+
+.. image:: http://i.imgsafe.org/287d9fd.jpeg
+    :target: http://i.imgsafe.org/287d9fd.jpeg
+    :alt: With Custom permission behaviour
+
+RTL and localized
+
+.. image:: http://i.imgsafe.org/4892b01.jpeg
+    :target: http://i.imgsafe.org/4892b01.jpeg
+    :alt: RTL and localized
+
+-------
 
 Enjoy and feel free to report any bugs or make pull requests.
