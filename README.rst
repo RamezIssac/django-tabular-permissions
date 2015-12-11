@@ -72,14 +72,14 @@ Screenshots:
 ------------
 Basic Demo
 
-.. image:: http://i.imgsafe.org/2559bdc.jpeg
-    :target: http://i.imgsafe.org/2559bdc.jpeg
+.. image:: http://i.imgsafe.org/c851707.jpeg
+    :target: http://i.imgsafe.org/c851707.jpeg
     :alt: Basic demo
 
 With Custom permission behaviour
 
-.. image:: http://i.imgsafe.org/287d9fd.jpeg
-    :target: http://i.imgsafe.org/287d9fd.jpeg
+.. image:: http://i.imgsafe.org/c506554.jpeg
+    :target: http://i.imgsafe.org/c506554.jpeg
     :alt: With Custom permission behaviour
 
 RTL and localized
