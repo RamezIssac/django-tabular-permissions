@@ -62,6 +62,7 @@ class TabularPermissionsWidget(FilteredSelectMultiple):
 
                 if add_perm_id and change_perm_id and delete_perm_id:
                     app_dict['models'].append({
+                        'model_name': model_name,
                         'model': model,
                         'verbose_name_plural': force_text(model._meta.verbose_name_plural),
                         'verbose_name': force_text(model._meta.verbose_name),

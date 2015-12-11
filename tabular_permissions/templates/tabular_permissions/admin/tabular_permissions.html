@@ -1,6 +1,7 @@
 {% load i18n %}
 
-<table id="tabular_permissions" class="table table-condensed table-striped table-hover" cellspacing="0" width="100%" data-input-name="{{ input_name }}">
+<table id="tabular_permissions" class="table table-condensed table-striped table-hover" cellspacing="0" width="100%"
+       data-input-name="{{ input_name }}">
     <thead>
     <tr>
         <th> {% trans 'application' %}</th>
@@ -40,15 +41,23 @@
 
                 {% if forloop.counter0 == 0 %}
                     <td rowspan="{{ app.models|length }}" class="app-name{% if LANGUAGE_BIDI %}-rtl {% endif %}"
-                        data-app-name="{{ app.label }}">{{ app.verbose_name }}</td>
+                        data-app-name="{{ app.label }}">{{ app.verbose_name }}
+                    </td>
                 {% endif %}
                 <td>
                     {{ model.verbose_name }}
+                    <div class="input">
+                        <label>
+                            <input type="checkbox" class="checkbox select-all select-row"
+                                    data-model-name="{{ model.model_name }}">
+                            {% trans 'select all' %}
+                        </label>
+                    </div>
                 </td>
                 <td class="add">
                     <div class="input">
                         <label>
-                            <input type="checkbox" class="checkbox add"
+                            <input type="checkbox" class="checkbox add {{ model.model_name }}"
                                    id="id_{{ model.add_perm_name }}" data-perm-id="{{ model.add_perm_id }}"
                                     {% if model.add_perm_id in user_permissions %}
                                    checked="checked"
@@ -59,7 +68,7 @@
                 <td class="change">
                     <div class="checkbox ">
                         <label>
-                            <input type="checkbox" class="checkbox change"
+                            <input type="checkbox" class="checkbox change {{ model.model_name }}"
                                    id="id_{{ model.change_perm_name }}" data-perm-id="{{ model.change_perm_id }}"
                                     {% if model.change_perm_id in user_permissions %}
                                    checked="checked"
@@ -70,7 +79,7 @@
                 <td class="delete">
                     <div class="checkbox ">
                         <label>
-                            <input type="checkbox" class="checkbox delete"
+                            <input type="checkbox" class="checkbox delete {{ model.model_name }}"
                                    id="id_{{ model.delete_perm_name }}" data-perm-id="{{ model.delete_perm_id }}"
                                     {% if model.delete_perm_id in user_permissions %}
                                    checked="checked"
@@ -92,24 +101,26 @@
 </table>
 <hr/>
 {% block style %}
-{#    Seems a waste to request those couple of sad lines from the server as separate css file #}
-<style>
-    .user-permissions-app-separator{
-        border-bottom: 1px solid black;
-    }
+    {#    Seems a waste to request those couple of sad lines from the server as separate css file #}
+    <style>
+        .user-permissions-app-separator {
+            border-bottom: 1px solid black;
+        }
 
-    .app-name-rtl {
-        border-left: 1px black solid;
-    }
-    .app-name {
-        border-right: 1px black solid;
-    }
-    th{
-        text-decoration: underline;
-    }
+        .app-name-rtl {
+            border-left: 1px black solid;
+        }
 
-    .related-widget-wrapper-user-permissions{
-        width: 90%;
-    }
-</style>
+        .app-name {
+            border-right: 1px black solid;
+        }
+
+        th {
+            text-decoration: underline;
+        }
+
+        .related-widget-wrapper-user-permissions {
+            width: 90%;
+        }
+    </style>
 {% endblock %}
