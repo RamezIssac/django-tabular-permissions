@@ -11,7 +11,7 @@
             <label>
                 <input type="checkbox" class="checkbox select-all add"
                        id="perm_add_select_all">
-                {% trans 'select all' %}
+                {% trans 'All' %}
             </label>
         </th>
         <th>
@@ -19,7 +19,7 @@
             <label>
                 <input type="checkbox" class="checkbox select-all change"
                        id="perm_change_select_all">
-                {% trans 'select all' %}
+                {% trans 'All' %}
             </label>
         </th>
         <th>
@@ -27,7 +27,7 @@
             <label>
                 <input type="checkbox" class="checkbox select-all delete"
                        id="perm_delete_select_all">
-                {% trans 'select all' %}
+                {% trans 'All' %}
             </label>
         </th>
     </tr>
@@ -40,7 +40,7 @@
             <tr class="{% cycle 'row1' 'row2' %}">
 
                 {% if forloop.counter0 == 0 %}
-                    <td rowspan="{{ app.models|length }}" class="app-name{% if LANGUAGE_BIDI %}-rtl {% endif %}"
+                    <td rowspan="{{ app.models|length }}" class="app-name"
                         data-app-name="{{ app.label }}">{{ app.verbose_name }}
                     </td>
                 {% endif %}
@@ -50,7 +50,7 @@
                         <label>
                             <input type="checkbox" class="checkbox select-all select-row"
                                     data-model-name="{{ model.model_name }}">
-                            {% trans 'select all' %}
+                            {% trans 'All' %}
                         </label>
                     </div>
                 </td>
@@ -106,17 +106,19 @@
         .user-permissions-app-separator {
             border-bottom: 1px solid black;
         }
-
-        .app-name-rtl {
-            border-left: 1px black solid;
-        }
-
         .app-name {
             border-right: 1px black solid;
+        }
+        [dir=rtl] .app-name{
+            border-left: 1px black solid;
+            border-right: initial;
         }
 
         th {
             text-decoration: underline;
+        }
+        .select-all{
+            font-style: italic;
         }
 
         .related-widget-wrapper-user-permissions {
