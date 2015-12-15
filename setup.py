@@ -9,7 +9,7 @@ os.chdir(os.path.normpath(os.path.join(os.path.abspath(__file__), os.pardir)))
 
 setup(
     name='django-tabular-permissions',
-    version='1.0.5',
+    version='1.0.6',
     packages=['tabular_permissions'],
     include_package_data=True,
     license='BSD License',
@@ -19,6 +19,7 @@ setup(
     author='Ramez Ashraf',
     author_email='ramez@radev.io',
     classifiers=[
+        'Development Status :: 5 - Production/Stable',
         'Environment :: Web Environment',
         'Framework :: Django',
         'Intended Audience :: Developers',
