@@ -9,7 +9,8 @@ from django.template.loader import get_template
 from django.utils.encoding import force_text
 from django.utils.html import escapejs
 from django.utils.safestring import mark_safe
-from . import app_settings
+from .app_settings import TABULAR_PERMISSIONS_EXCLUDE_FUNCTION, TABULAR_PERMISSIONS_EXCLUDE_APPS, \
+    TABULAR_PERMISSIONS_EXCLUDE_MODELS, TABULAR_PERMISSIONS_TEMPLATE
 from .helpers import get_perm_name
 
 
@@ -19,7 +20,7 @@ class TabularPermissionsWidget(FilteredSelectMultiple):
 
     def __init__(self, verbose_name, is_stacked, input_name='user_permissions', attrs=None, choices=()):
         super(TabularPermissionsWidget, self).__init__(verbose_name, is_stacked, attrs, choices)
-        self.exclude_perms = []
+        self.managed_perms = []
         self.input_name = input_name  # in case of UserAdmin, it's 'user_permissions', GroupAdmin it's 'permissions'
         self.hide_original = True
 
@@ -51,16 +52,18 @@ class TabularPermissionsWidget(FilteredSelectMultiple):
                 change_perm_id = codename_id_map.get(change_perm_name, False)
                 delete_perm_id = codename_id_map.get(delete_perm_name, False)
 
-                if app.label in app_settings.TABULAR_PERMISSIONS_EXCLUDE_APPS \
-                        or model_name in app_settings.TABULAR_PERMISSIONS_EXCLUDE_MODELS \
-                        or app_settings.TABULAR_PERMISSIONS_EXCLUDE_FUNCTION(model):
-                    excluded_perms.extend([add_perm_id, change_perm_id, delete_perm_id])
-                    reminder_perms.pop(add_perm_name)
-                    reminder_perms.pop(change_perm_name)
-                    reminder_perms.pop(delete_perm_name)
-                    continue
-
                 if add_perm_id and change_perm_id and delete_perm_id:
+
+                    if app.label in TABULAR_PERMISSIONS_EXCLUDE_APPS \
+                            or model_name in TABULAR_PERMISSIONS_EXCLUDE_MODELS \
+                            or TABULAR_PERMISSIONS_EXCLUDE_FUNCTION(model):
+
+                        excluded_perms.extend([add_perm_id, change_perm_id, delete_perm_id])
+                        reminder_perms.pop(add_perm_name)
+                        reminder_perms.pop(change_perm_name)
+                        reminder_perms.pop(delete_perm_name)
+                        continue
+
                     app_dict['models'].append({
                         'model_name': model_name,
                         'model': model,
@@ -83,8 +86,8 @@ class TabularPermissionsWidget(FilteredSelectMultiple):
 
         request_context = {'apps_available': apps_available, 'user_permissions': user_permissions,
                            'codename_id_map': codename_id_map, 'input_name': self.input_name}
-        body = get_template(app_settings.TABULAR_PERMISSIONS_TEMPLATE).render(request_context).encode("utf-8")
-        self.exclude_perms = excluded_perms
+        body = get_template(TABULAR_PERMISSIONS_TEMPLATE).render(request_context).encode("utf-8")
+        self.managed_perms = excluded_perms
         if reminder_perms:
             self.hide_original = False
 
@@ -115,7 +118,7 @@ class TabularPermissionsWidget(FilteredSelectMultiple):
         return mark_safe(response)
 
     def render_option(self, selected_choices, option_value, option_label):
-        if option_value in self.exclude_perms:
+        if option_value in self.managed_perms:
             # permission is covered in table, skip it.
             return ''
         self.hide_original = False

@@ -2,17 +2,19 @@ django-tabular-permissions
 ##########################
 Display Django basic permissions (add, change & delete) in a tabular format that is user friendly, translatable and easy customized.
 If you have more customised permissions, the default `FilteredSelectMultiple` widget will also appear to handle those permissions.
-Scroll down from some screen shots.
+
+*Scroll down for some screen shots.*
 
 Features:
 ---------
-* Permissions are displayed in a active language with app and model ``verbose_name``.
+* Permissions are displayed in the active language with app and model ``verbose_name``.
 * Any extra custom permissions are displayed in the default admin widget for permissions.
 * Customize which apps, models to show in the permissions table. You can also set a exclude function for high-end customization.
 * RTL ready, Bootstrap ready.
 * Easy customize-able look.
 * Tested on Django 1.8 & Django 1.9.
 * Tested on Python 2.7, 3.4 & 3.5
+
 .. image:: https://travis-ci.org/RamezIssac/django-tabular-permissions.svg?branch=master
     :target: https://travis-ci.org/RamezIssac/django-tabular-permissions
 
@@ -67,6 +69,18 @@ If you have a custom UserAdmin, then set this option to False and make sure you 
 
 Default to 'tabular_permissions/admin/tabular_permissions.html`.
 You can either extend or override this template for maximum control.
+
+
+JavaScript:
+-----------
+Located at 'static/tabular_permissions/tabular_permissions.js', it have 3 responsibilities:
+
+1. Upon form submit, the checked permissions in the table are dynamically appended to the form default permission input 
+   so the backend can carry on its functionality normally and correctly. 
+2. Add handlers for column and row select-all checkboxes.
+3. Add a class 'related-widget-wrapper-user-permissions' to the div.related-widget-wrapper
+   that contains the table, it serves when you need to manipulate the table container.
+
 
 Screenshots:
 ------------
