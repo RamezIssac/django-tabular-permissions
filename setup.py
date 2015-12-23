@@ -9,13 +9,13 @@ os.chdir(os.path.normpath(os.path.join(os.path.abspath(__file__), os.pardir)))
 
 setup(
     name='django-tabular-permissions',
-    version='1.0.6',
+    version='1.0.7',
     packages=['tabular_permissions'],
     include_package_data=True,
     license='BSD License',
     description='Display django permissions in a tabular format that is user friendly, and highly customisable',
     long_description=README,
-    url='https://radev.io/',
+    url='https://github.com/RamezIssac/django-tabular-permissions',
     author='Ramez Ashraf',
     author_email='ramez@radev.io',
     classifiers=[

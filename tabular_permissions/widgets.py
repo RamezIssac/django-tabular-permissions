@@ -5,6 +5,7 @@ from django.apps import apps
 from django.contrib.auth.models import Permission
 from django.contrib.admin.templatetags.admin_static import static
 from django.contrib.admin.widgets import FilteredSelectMultiple
+from django.contrib.contenttypes.models import ContentType
 from django.template.loader import get_template
 from django.utils.encoding import force_text
 from django.utils.html import escapejs
@@ -28,11 +29,11 @@ class TabularPermissionsWidget(FilteredSelectMultiple):
 
         apps_available = []  # main container to send to template
         user_permissions = Permission.objects.filter(id__in=value or []).values_list('id', flat=True)
-        all_perms = Permission.objects.all().values('id', 'codename').order_by('codename')
-        excluded_perms = []
+        all_perms = Permission.objects.all().values('id', 'codename', 'content_type_id').order_by('codename')
+        excluded_perms = set([])
         codename_id_map = {}
         for p in all_perms:
-            codename_id_map[p['codename']] = p['id']
+            codename_id_map['%s_%s' % (p['codename'], p['content_type_id'])] = p['id']
 
         reminder_perms = codename_id_map.copy()
         # used to detect if the tabular permissions covers all permissions, if so, we don't need to make it visible.
@@ -43,25 +44,25 @@ class TabularPermissionsWidget(FilteredSelectMultiple):
 
             for model_name in app.models:
                 model = app.models[model_name]
-
+                ct_id = ContentType.objects.get_for_model(model).pk
                 add_perm_name = get_perm_name(model_name, 'add')
                 change_perm_name = get_perm_name(model_name, 'change')
                 delete_perm_name = get_perm_name(model_name, 'delete')
+                # pdb.set_trace()
+                add_perm_id = codename_id_map.get('%s_%s' % (add_perm_name, ct_id), False)
+                change_perm_id = codename_id_map.get('%s_%s' % (change_perm_name, ct_id), False)
+                delete_perm_id = codename_id_map.get('%s_%s' % (delete_perm_name, ct_id), False)
 
-                add_perm_id = codename_id_map.get(add_perm_name, False)
-                change_perm_id = codename_id_map.get(change_perm_name, False)
-                delete_perm_id = codename_id_map.get(delete_perm_name, False)
-
-                if add_perm_id and change_perm_id and delete_perm_id:
+                if add_perm_id and change_perm_id and delete_perm_id and not {add_perm_id, change_perm_id,
+                                                                              delete_perm_id} & excluded_perms:
+                    excluded_perms.update([add_perm_id, change_perm_id, delete_perm_id])
+                    reminder_perms.pop('%s_%s' % (add_perm_name, ct_id))
+                    reminder_perms.pop('%s_%s' % (change_perm_name, ct_id))
+                    reminder_perms.pop('%s_%s' % (delete_perm_name, ct_id))
 
                     if app.label in TABULAR_PERMISSIONS_EXCLUDE_APPS \
                             or model_name in TABULAR_PERMISSIONS_EXCLUDE_MODELS \
                             or TABULAR_PERMISSIONS_EXCLUDE_FUNCTION(model):
-
-                        excluded_perms.extend([add_perm_id, change_perm_id, delete_perm_id])
-                        reminder_perms.pop(add_perm_name)
-                        reminder_perms.pop(change_perm_name)
-                        reminder_perms.pop(delete_perm_name)
                         continue
 
                     app_dict['models'].append({
@@ -76,10 +77,6 @@ class TabularPermissionsWidget(FilteredSelectMultiple):
                         'delete_perm_id': delete_perm_id,
                         'delete_perm_name': delete_perm_name,
                     })
-                    excluded_perms.extend([add_perm_id, change_perm_id, delete_perm_id])
-                    reminder_perms.pop(add_perm_name)
-                    reminder_perms.pop(change_perm_name)
-                    reminder_perms.pop(delete_perm_name)
 
             if app.models:
                 apps_available.append(app_dict)
