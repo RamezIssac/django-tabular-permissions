@@ -22,3 +22,4 @@ try:
 except:
     raise ImproperlyConfigured('Tax calculator class can not be loaded from given path " %s"' % ModelExcludeFunction)
 
+TABULAR_PERMISSIONS_USE_FOR_CONCRETE = getattr(settings, 'TABULAR_PERMISSIONS_USE_FOR_CONCRETE', True)

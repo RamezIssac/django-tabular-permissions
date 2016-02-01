@@ -11,7 +11,7 @@ from django.utils.encoding import force_text
 from django.utils.html import escapejs
 from django.utils.safestring import mark_safe
 from .app_settings import TABULAR_PERMISSIONS_EXCLUDE_FUNCTION, TABULAR_PERMISSIONS_EXCLUDE_APPS, \
-    TABULAR_PERMISSIONS_EXCLUDE_MODELS, TABULAR_PERMISSIONS_TEMPLATE
+    TABULAR_PERMISSIONS_EXCLUDE_MODELS, TABULAR_PERMISSIONS_TEMPLATE, TABULAR_PERMISSIONS_USE_FOR_CONCRETE
 from .helpers import get_perm_name
 
 
@@ -44,7 +44,7 @@ class TabularPermissionsWidget(FilteredSelectMultiple):
 
             for model_name in app.models:
                 model = app.models[model_name]
-                ct_id = ContentType.objects.get_for_model(model).pk
+                ct_id = ContentType.objects.get_for_model(model, for_concrete_model=TABULAR_PERMISSIONS_USE_FOR_CONCRETE).pk
                 add_perm_name = get_perm_name(model_name, 'add')
                 change_perm_name = get_perm_name(model_name, 'change')
                 delete_perm_name = get_perm_name(model_name, 'delete')
@@ -103,7 +103,7 @@ class TabularPermissionsWidget(FilteredSelectMultiple):
         if reminder_perms:
             output.append('<script type="text/javascript">addEvent(window, "load", function(e) {')
 
-            if django_version == '1.8':
+            if '1.8' in django_version:
                 output.append('SelectFilter.init("id_%s", "%s", %s, "%s"); });</script>\n'
                               % (name, self.verbose_name.replace('"', '\\"'), int(self.is_stacked), static('admin/')))
             else:  # 1.9
