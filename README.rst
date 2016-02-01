@@ -70,6 +70,12 @@ If you have a custom UserAdmin, then set this option to False and make sure you 
 Default to 'tabular_permissions/admin/tabular_permissions.html`.
 You can either extend or override this template for maximum control.
 
+* ``TABULAR_PERMISSIONS_USE_FOR_CONCRETE``
+
+Default `True`. Till now (Feb 1 2016 - django 1.9), there is an inconsistency with proxy models permissions (ticket `11154 <https://code.djangoproject.com/ticket/11154>`_)
+So in case you have proxy models and you create their permissions by hand (via this `gist <https://gist.github.com/magopian/7543724>`_ maybe)
+Turn off this option in order to correctly assign your newly created permissions via django-tabular-permissions widget.
+
 
 JavaScript:
 -----------

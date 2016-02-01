@@ -1,3 +1,4 @@
+* 1.0.8: Fix django version check, add option for dealing with proxy models permissions
 * 1.0.7: fixed Issue#2 , 2 models with the same name in different apps + logic enhancement.
 * 1.0.5: made TABULAR_PERMISSIONS_EXCLUDE model and app list case insensitive;
   Handle case where excluded model that does not implement the default permissions;
