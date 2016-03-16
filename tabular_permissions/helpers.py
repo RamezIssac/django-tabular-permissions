@@ -10,11 +10,3 @@ class TabularPermissionDefaultExcludeFunction(object):
         return False
 
 
-def get_class(path):
-    names = path.split('.')
-    my_class = names.pop(-1)
-    path_adjusted = '.'.join(names)
-
-    mod = __import__(path_adjusted, fromlist=[my_class])
-    klass = getattr(mod, my_class)
-    return klass
