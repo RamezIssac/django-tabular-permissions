@@ -1,8 +1,11 @@
 from django.contrib import admin
-from django.contrib.auth.admin import UserAdmin, User, Group, GroupAdmin
+from django.contrib.auth.admin import UserAdmin, Group, GroupAdmin
+from django.contrib.auth import get_user_model
 from django.core.exceptions import ImproperlyConfigured
 from tabular_permissions.widgets import TabularPermissionsWidget
 from . import app_settings
+
+User = get_user_model()
 
 
 class UserTabularPermissionsAdminBase(object):
