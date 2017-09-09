@@ -41,11 +41,11 @@
 
                 {% if forloop.counter0 == 0 %}
                     <td rowspan="{{ app.models|length }}" class="app-name"
-                        data-app-name="{{ app.label }}">{{ app.verbose_name }}
+                        data-app-name="{{ app.label }}">{{ app.verbose_name|capfirst }}
                     </td>
                 {% endif %}
                 <td>
-                    {{ model.verbose_name }}
+                    {{ model.verbose_name|capfirst }}
                     <div class="input">
                         <label>
                             <input type="checkbox" class="checkbox select-all select-row"

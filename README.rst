@@ -12,8 +12,16 @@ Features:
 * Customize which apps, models to show in the permissions table. You can also set a exclude function for high-end customization.
 * RTL ready, Bootstrap ready.
 * Easy customize-able look.
-* Tested on Django 1.8 & Django 1.9.
+* Tested on Django 1.11
 * Tested on Python 2.7, 3.4 & 3.5
+
+Compatibility:
+--------------
+Django tabular permissions current version 1.10 supports only django 1.11
+For earlier versions of django use django-tabular-permissions 1.9.
+
+
+
 
 .. image:: https://travis-ci.org/RamezIssac/django-tabular-permissions.svg?branch=master
     :target: https://travis-ci.org/RamezIssac/django-tabular-permissions
