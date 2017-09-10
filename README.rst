@@ -17,8 +17,8 @@ Features:
 
 Compatibility:
 --------------
-Django tabular permissions current version 1.10 supports only django 1.11
-For earlier versions of django use django-tabular-permissions 1.9.
+Django tabular permissions current version 1.1 supports only django 1.11
+For earlier versions of django use django-tabular-permissions 1.0.9.
 
 
 
