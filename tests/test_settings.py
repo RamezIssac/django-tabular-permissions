@@ -17,7 +17,6 @@ INSTALLED_APPS = [
     'tabular_permissions',
 
 ]
-DEBUG = True
 
 DATABASES = {
     'default': {
@@ -30,7 +29,7 @@ DATABASES = {
 }
 ROOT_URLCONF = 'tests.urls'
 
-MIDDLEWARE_CLASSES = (
+MIDDLEWARE = (
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.locale.LocaleMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -43,3 +42,25 @@ MIDDLEWARE_CLASSES = (
 STATIC_URL = '/static/'
 
 SITE_ID = 1
+
+TEMPLATES = [
+    {
+        'BACKEND': 'django.template.backends.django.DjangoTemplates',
+        'DIRS': [],
+        'APP_DIRS': True,
+        'OPTIONS': {
+            'context_processors': [
+                'django.template.context_processors.debug',
+                'django.template.context_processors.request',
+                'django.contrib.auth.context_processors.auth',
+                'django.template.context_processors.static',
+                'django.template.context_processors.i18n',
+                "django.template.context_processors.tz",
+            ],
+        },
+    },
+]
+
+PASSWORD_HASHERS = [
+    'django.contrib.auth.hashers.MD5PasswordHasher',
+]
