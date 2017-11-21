@@ -1,3 +1,4 @@
+* 1.1.1: Added `model-` for model_name on input class to prevent css conflict (ie model_name called table)
 * 1.1: Support django 1.11
 * 1.0.9: Minor improve, use django's `import_string` instead of own hacky code to load the exclude function
 * 1.0.8: Fix django version check, add option for dealing with proxy models permissions

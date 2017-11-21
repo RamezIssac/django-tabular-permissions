@@ -57,7 +57,7 @@
                 <td class="add">
                     <div class="input">
                         <label>
-                            <input type="checkbox" class="checkbox add {{ model.model_name }}"
+                            <input type="checkbox" class="checkbox add model-{{ model.model_name }}"
                                    id="id_{{ model.add_perm_name }}" data-perm-id="{{ model.add_perm_id }}"
                                     {% if model.add_perm_id in user_permissions %}
                                    checked="checked"
@@ -68,7 +68,7 @@
                 <td class="change">
                     <div class="checkbox ">
                         <label>
-                            <input type="checkbox" class="checkbox change {{ model.model_name }}"
+                            <input type="checkbox" class="checkbox change model-{{ model.model_name }}"
                                    id="id_{{ model.change_perm_name }}" data-perm-id="{{ model.change_perm_id }}"
                                     {% if model.change_perm_id in user_permissions %}
                                    checked="checked"
@@ -79,7 +79,7 @@
                 <td class="delete">
                     <div class="checkbox ">
                         <label>
-                            <input type="checkbox" class="checkbox delete {{ model.model_name }}"
+                            <input type="checkbox" class="checkbox delete model-{{ model.model_name }}"
                                    id="id_{{ model.delete_perm_name }}" data-perm-id="{{ model.delete_perm_id }}"
                                     {% if model.delete_perm_id in user_permissions %}
                                    checked="checked"
