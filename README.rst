@@ -105,21 +105,21 @@ Screenshots:
 ------------
 Basic Demo
 
-.. image:: http://i.imgsafe.org/c851707.jpeg
-    :target: http://i.imgsafe.org/c851707.jpeg
+.. image:: https://rasystems.io/static/images/tabular_permissions/tp_1.png
+    :target: https://rasystems.io/static/images/tabular_permissions/tp_1.png
     :alt: Basic demo
-
-With Custom permission behaviour
-
-.. image:: http://i.imgsafe.org/c506554.jpeg
-    :target: http://i.imgsafe.org/c506554.jpeg
-    :alt: With Custom permission behaviour
 
 RTL and localized
 
-.. image:: http://i.imgsafe.org/4892b01.jpeg
-    :target: http://i.imgsafe.org/4892b01.jpeg
+.. image:: https://rasystems.io/static/images/tabular_permissions/tp_ar.png
+    :target: https://rasystems.io/static/images/tabular_permissions/tp_ar.png
     :alt: RTL and localized
+
+With Custom permission behaviour
+
+.. image:: https://rasystems.io/static/images/tabular_permissions/tp_extra.png
+    :target: https://rasystems.io/static/images/tabular_permissions/tp_extra.png
+    :alt: With Custom permission
 
 -------
 

@@ -36,3 +36,4 @@ model_exclude_func = user_exclude.get('function')
 EXCLUDE_FUNCTION = import_string(model_exclude_func)
 
 USE_FOR_CONCRETE = TABULAR_PERMISSIONS_CONFIG['use_for_concrete']
+TRANSLATION_FUNC = import_string(TABULAR_PERMISSIONS_CONFIG['custom_permission_translation'])

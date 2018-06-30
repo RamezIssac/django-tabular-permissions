@@ -8,7 +8,7 @@ from django.template.loader import get_template
 from django.utils.encoding import force_text
 from django.utils.safestring import mark_safe
 from .app_settings import EXCLUDE_FUNCTION, EXCLUDE_APPS, \
-    EXCLUDE_MODELS, TEMPLATE, USE_FOR_CONCRETE
+    EXCLUDE_MODELS, TEMPLATE, USE_FOR_CONCRETE, TRANSLATION_FUNC
 from .helpers import get_perm_name
 
 
@@ -68,8 +68,9 @@ class TabularPermissionsWidget(FilteredSelectMultiple):
                 delete_perm_id = codename_id_map.get('%s_%s' % (delete_perm_name, ct_id), False)
                 if model._meta.permissions:
                     custom_permissions_available = True
-                    for codename, verbose_name in model._meta.permissions:
+                    for codename, perm_name in model._meta.permissions:
                         c_perm_id = codename_id_map.get('%s_%s' % (codename, ct_id), False)
+                        verbose_name = TRANSLATION_FUNC(codename, perm_name, ct_id)
                         model_custom_permissions.append(
                             (codename, verbose_name, c_perm_id)
                         )
