@@ -1,12 +1,12 @@
 from __future__ import unicode_literals
-import datetime
-from unittest import skip
 from django import test
-from django.contrib.admin.tests import AdminSeleniumTestCase
 from django.contrib.auth import get_user_model
 from django.contrib.auth.models import Permission
-from django.core.urlresolvers import reverse
-from django.utils.encoding import force_text
+try:
+    from django.core.urlresolvers import reverse
+except ImportError:
+    from django.urls import reverse
+
 from pyquery import PyQuery as pq
 
 User = get_user_model()
