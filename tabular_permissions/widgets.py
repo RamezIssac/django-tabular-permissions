@@ -7,9 +7,10 @@ from django.forms import SelectMultiple
 from django.template.loader import get_template
 from django.utils.encoding import force_text
 from django.utils.safestring import mark_safe
-from .app_settings import TABULAR_PERMISSIONS_EXCLUDE_FUNCTION, TABULAR_PERMISSIONS_EXCLUDE_APPS, \
-    TABULAR_PERMISSIONS_EXCLUDE_MODELS, TABULAR_PERMISSIONS_TEMPLATE, TABULAR_PERMISSIONS_USE_FOR_CONCRETE
+from .app_settings import EXCLUDE_FUNCTION, EXCLUDE_APPS, \
+    EXCLUDE_MODELS, TEMPLATE, USE_FOR_CONCRETE
 from .helpers import get_perm_name
+
 
 def get_reminder_permissions_iterator(choices, reminder_perms):
     reminder_perms_list = reminder_perms.values()
@@ -40,33 +41,54 @@ class TabularPermissionsWidget(FilteredSelectMultiple):
         for p in all_perms:
             codename_id_map['%s_%s' % (p['codename'], p['content_type_id'])] = p['id']
 
+        # reminder_perms used to detect if the tabular permissions covers all permissions,
+        # if true, we don't need to make the default widget visible.
         reminder_perms = codename_id_map.copy()
-        # used to detect if the tabular permissions covers all permissions, if so, we don't need to make it visible.
+
+        # a global flag to either show or hide the other permission column in the table
+        custom_permissions_available = False
 
         for app in apps.get_app_configs():
             app_dict = {'verbose_name': force_text(app.verbose_name),
                         'models': []}
 
             for model_name in app.models:
+                model_custom_permissions = []
+                model_custom_permissions_ids = []
+
                 model = app.models[model_name]
-                ct_id = ContentType.objects.get_for_model(model, for_concrete_model=TABULAR_PERMISSIONS_USE_FOR_CONCRETE).pk
+                ct_id = ContentType.objects.get_for_model(model,
+                                                          for_concrete_model=USE_FOR_CONCRETE).pk
+
                 add_perm_name = get_perm_name(model_name, 'add')
                 change_perm_name = get_perm_name(model_name, 'change')
                 delete_perm_name = get_perm_name(model_name, 'delete')
                 add_perm_id = codename_id_map.get('%s_%s' % (add_perm_name, ct_id), False)
                 change_perm_id = codename_id_map.get('%s_%s' % (change_perm_name, ct_id), False)
                 delete_perm_id = codename_id_map.get('%s_%s' % (delete_perm_name, ct_id), False)
+                if model._meta.permissions:
+                    custom_permissions_available = True
+                    for codename, verbose_name in model._meta.permissions:
+                        c_perm_id = codename_id_map.get('%s_%s' % (codename, ct_id), False)
+                        model_custom_permissions.append(
+                            (codename, verbose_name, c_perm_id)
+                        )
+                        model_custom_permissions_ids.append(c_perm_id)
 
-                if add_perm_id and change_perm_id and delete_perm_id and not {add_perm_id, change_perm_id,
-                                                                              delete_perm_id} & excluded_perms:
-                    excluded_perms.update([add_perm_id, change_perm_id, delete_perm_id])
-                    reminder_perms.pop('%s_%s' % (add_perm_name, ct_id))
-                    reminder_perms.pop('%s_%s' % (change_perm_name, ct_id))
-                    reminder_perms.pop('%s_%s' % (delete_perm_name, ct_id))
+                if (
+                        add_perm_id or change_perm_id or delete_perm_id or model_custom_permissions):  # and not {add_perm_id, change_perm_id, delete_perm_id} & excluded_perms:
+                    excluded_perms.update([add_perm_id, change_perm_id, delete_perm_id] + model_custom_permissions_ids)
+                    reminder_perms.pop('%s_%s' % (add_perm_name, ct_id), False)
+                    reminder_perms.pop('%s_%s' % (change_perm_name, ct_id), False)
+                    reminder_perms.pop('%s_%s' % (delete_perm_name, ct_id), False)
+                    for c, v, _id in model_custom_permissions:
+                        reminder_perms.pop('%s_%s' % (c, ct_id), False)
 
-                    if app.label in TABULAR_PERMISSIONS_EXCLUDE_APPS \
-                            or model_name in TABULAR_PERMISSIONS_EXCLUDE_MODELS \
-                            or TABULAR_PERMISSIONS_EXCLUDE_FUNCTION()(model):
+                    # because the logic of exclusion should/would work on both the tabular_permissin widget and the normal widget
+                    # ie bydefautlwe exclude the session, admin log permissions and we dont want that on either widgets
+                    if app.label in EXCLUDE_APPS \
+                            or model_name in EXCLUDE_MODELS \
+                            or EXCLUDE_FUNCTION(model):
                         continue
 
                     app_dict['models'].append({
@@ -80,14 +102,16 @@ class TabularPermissionsWidget(FilteredSelectMultiple):
                         'change_perm_name': change_perm_name,
                         'delete_perm_id': delete_perm_id,
                         'delete_perm_name': delete_perm_name,
+                        'custom_permissions': model_custom_permissions,
                     })
 
             if app.models:
                 apps_available.append(app_dict)
 
         request_context = {'apps_available': apps_available, 'user_permissions': user_permissions,
-                           'codename_id_map': codename_id_map, 'input_name': self.input_name}
-        body = get_template(TABULAR_PERMISSIONS_TEMPLATE).render(request_context).encode("utf-8")
+                           'codename_id_map': codename_id_map, 'input_name': self.input_name,
+                           'custom_permissions_available': custom_permissions_available}
+        body = get_template(TEMPLATE).render(request_context).encode("utf-8")
         self.managed_perms = excluded_perms
         if reminder_perms:
             self.hide_original = False

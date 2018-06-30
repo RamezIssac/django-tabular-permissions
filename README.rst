@@ -1,25 +1,18 @@
 django-tabular-permissions
 ##########################
-Display Django basic permissions (add, change & delete) in a tabular format that is user friendly, translatable and easy customized.
-If you have more customised permissions, the default `FilteredSelectMultiple` widget will also appear to handle those permissions.
+Display model permissions in a tabular widget that is user friendly, translatable and customizeable.
 
-*Scroll down for some screen shots.*
 
 Features:
 ---------
-* Permissions are displayed in the active language with app and model ``verbose_name``.
-* Any extra custom permissions are displayed in the default admin widget for permissions.
+* Permissions and their relevant app and models names are displayed in the active language.
+* Permisions are displayed in a table that contain the default model permissions **plus** any custom permissions.
 * Customize which apps, models to show in the permissions table. You can also set a exclude function for high-end customization.
 * RTL ready, Bootstrap ready.
 * Easy customize-able look.
-* Tested on Django 1.11
-* Tested on Python 2.7, 3.4 & 3.5
-
-Compatibility:
---------------
-Django tabular permissions current version 1.1 supports only django 1.11
-For earlier versions of django use django-tabular-permissions 1.0.9.
-
+* Django >= 1.11
+* Tested on Python 2.7, 3.5, 3.6 & 3.7
+* Default `FilteredSelectMultiple` widget will appear only if you have custom permissions that are not model related (ie directly created by code or hand)
 
 
 
@@ -33,67 +26,79 @@ You can install `django-tabular-permissions` via Pypi::
 
     pip install django-tabular-permissions
 
-Usage:
-------
-Simply add "tabular_permissions" to your INSTALLED_APPS setting like this::
+
+and add "tabular_permissions" to your INSTALLED_APPS setting (at any place after `django.contrib.auth`) ::
 
     INSTALLED_APPS = [
-        ...
+        'django.contrib.auth',
+         ....
         'tabular_permissions',
     ]
 
-then navigate to User and/or Group change form to see django-tabular-permissions in action.
+then navigate to User and/or Group change form to see `tabular_permissions` in action.
 
-Settings:
----------
+Configuration:
+--------------
+Tabular_permissions possible configurations and their default::
 
-* ``TABULAR_PERMISSIONS_EXCLUDE``
-
-Control which apps, models to show in the permissions table.
-By default tabular_permissions exclude contrib apps ``sessions`` , ``contenttypes`` and ``admin`` apps from 
-showing their models in the permissions table.
-You can add (or override) those apps and/or specify models to exclude, like this::
-
-    TABULAR_PERMISSIONS_EXCLUDE = {
-        'app': [],
-        'model': [],
-        'function': 'tabular_permissions.helpers.TabularPermissionDefaultExcludeFunction', 
-                     # A dotted path to a class that implement ``__call__`` that takes model as an argument.
-        'override': False # Set to True to override default behavior.
-    }    
-
-
-* ``TABULAR_PERMISSIONS_AUTO_IMPLEMENT``
-
-By default, just by including `tabular_permissions` in your installed_apps, the ``django.contrib.admin.UserAdmin`` (and ``GroupAdmin``) are "patched" to include the tabular_permissions widget.
-If you have a custom UserAdmin, then set this option to False and make sure you either:
-
-1. Inherit from `TabularPermissionsUserAdmin` for User admin and from``TabularPermissionsGroupAdmin`` for group admin
-2. Inherit from ``UserTabularPermissionsAdminBase`` and ``GroupTabularPermissionsAdminBase`` before admin.ModelAdmin or UserAdmin/GroupAdmin,
-3. Set the user_permissions widget to ``tabular_permissions.widgets.TabularPermissionsWidget`` and remember to send a 3rd argument 'permissions' when in Group admin. See ``tabular_permissions.admin`` for information.
+    TABULAR_PERMISSIONS_CONFIG = {
+        'template': 'tabular_permissions/admin/tabular_permissions.html',
+        'exclude': {
+            'override': False,
+            'app': [],
+            'model': [],
+            'function':'tabular_permissions.helpers.dummy_permissions_exclude'
+        },
+        'auto_implement': True,
+        'use_for_concrete': True,
+        'custom_permission_translation': 'tabular_permissions.helpers.custom_permissions_translator',
+    }
 
 
-* ``TABULAR_PERMISSIONS_TEMPLATE``
+`template`
+  the template which contains the permissions table, you can always customize this default by extending or overriding
 
-Default to 'tabular_permissions/admin/tabular_permissions.html`.
-You can either extend or override this template for maximum control.
+`exclude`
+  Control which apps, models to show in the permissions table.
 
-* ``TABULAR_PERMISSIONS_USE_FOR_CONCRETE``
+  By default ``tabular_permissions`` exclude `sessions` , `contenttypes` and `admin` apps from showing their models in the permissions table. If you want to show them you can switch ``override`` to `False`.
 
-Default `True`. Till now (Feb 1 2016 - django 1.9), there is an inconsistency with proxy models permissions (ticket `11154 <https://code.djangoproject.com/ticket/11154>`_)
-So in case you have proxy models and you create their permissions by hand (via this `gist <https://gist.github.com/magopian/7543724>`_ maybe)
-Turn off this option in order to correctly assign your newly created permissions via django-tabular-permissions widget.
+  ``app`` & ``model`` lists would contain the names of the apps and models you wish to exclude.
 
+  ``function`` is a dotted path of a custom function which receive the model as a parameter to decide either to exclude it or not, default to a dummy function that always return False (ie do not exclude)
+
+auto_implement
+  By default, just by including `tabular_permissions` in your installed_apps, the ``django.contrib.admin.UserAdmin`` (and ``GroupAdmin``) are "patched" to include the tabular_permissions widget.
+  If you have a custom UserAdmin, then set this option to False and make sure you either:
+
+  1. Inherit from `TabularPermissionsUserAdmin` for User admin and from``TabularPermissionsGroupAdmin`` for group admin
+  2. Inherit from ``UserTabularPermissionsAdminBase`` and ``GroupTabularPermissionsAdminBase`` before admin.ModelAdmin for UserAdmin/GroupAdmin,
+  3. Set the user_permissions widget to ``tabular_permissions.widgets.TabularPermissionsWidget`` and remember to send a 3rd argument 'permissions' when in Group admin. See ``tabular_permissions.admin`` for information.
+
+use_for_concrete
+  There is an inconsistency with proxy models permissions (ticket `11154 <https://code.djangoproject.com/ticket/11154>`_).
+
+  So in case you have proxy models and you create their permissions by hand (via this `gist <https://gist.github.com/magopian/7543724>`_ maybe), then turn off this option in order to correctly assign your newly created permissions in django-tabular-permissions widget.
+
+custom_permission_translation
+  a dotted path function to translate the custom permission.
+  This function gets passed the permissions `codename`, `verbose_name` and its relevant `content_type_id`.
+  The function will try to translate the permission verbose_name.
 
 JavaScript:
 -----------
-Located at 'static/tabular_permissions/tabular_permissions.js', it have 3 responsibilities:
+Located at 'static/tabular_permissions/tabular_permissions.js', it have 2 responsibilities:
 
-1. Upon form submit, the checked permissions in the table are dynamically appended to the form default permission input 
-   so the backend can carry on its functionality normally and correctly. 
-2. Add handlers for column and row select-all checkboxes.
-3. Add a class 'related-widget-wrapper-user-permissions' to the div.related-widget-wrapper
-   that contains the table, it serves when you need to manipulate the table container.
+1. Upon form submit, the checked permissions in the table are dynamically appended to the form default permission input so the backend can carry on its functionality normally and correctly.
+2. Add handlers for column and row `select-all` checkboxes.
+
+
+Compatibility:
+--------------
+Current version 2.0 supports only django >= 1.11
+For earlier versions of django use django-tabular-permissions 1.0.9.
+
+
 
 
 Screenshots:
@@ -118,4 +123,4 @@ RTL and localized
 
 -------
 
-Enjoy and feel free to report any bugs or make pull requests.
+Enjoy and feel free to report any bugs or make pull requests.cutom permissio

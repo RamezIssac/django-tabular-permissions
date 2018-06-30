@@ -8,28 +8,33 @@
         <th>{% trans 'model' %}</th>
         <th>
             {% trans 'Add' %}
-            <label>
+            <div>
                 <input type="checkbox" class="checkbox select-all add"
                        id="perm_add_select_all">
                 {% trans 'All' %}
-            </label>
+            </div>
         </th>
         <th>
             {% trans 'Change' %}
-            <label>
+            <div>
                 <input type="checkbox" class="checkbox select-all change"
                        id="perm_change_select_all">
                 {% trans 'All' %}
-            </label>
+            </div>
         </th>
         <th>
             {% trans 'Delete' %}
-            <label>
+            <div>
                 <input type="checkbox" class="checkbox select-all delete"
                        id="perm_delete_select_all">
                 {% trans 'All' %}
-            </label>
+            </div>
         </th>
+        {% if custom_permissions_available %}
+            <th>
+            {% trans 'other permissions' %}
+            </th>
+        {% endif %}
     </tr>
     </thead>
     <tbody>
@@ -47,36 +52,41 @@
                 <td>
                     {{ model.verbose_name|capfirst }}
                     <div class="input">
-                        <label>
-                            <input type="checkbox" class="checkbox select-all select-row"
-                                    data-model-name="{{ model.model_name }}">
-                            {% trans 'All' %}
-                        </label>
+                        {#                        <label>#}
+                        <input type="checkbox" class="checkbox select-all select-row"
+                               data-model-name="{{ model.model_name }}">
+                        {% trans 'All' %}
+                        {#                        </label>#}
                     </div>
                 </td>
                 <td class="add">
-                    <div class="input">
-                        <label>
-                            <input type="checkbox" class="checkbox add model-{{ model.model_name }}"
-                                   id="id_{{ model.add_perm_name }}" data-perm-id="{{ model.add_perm_id }}"
-                                    {% if model.add_perm_id in user_permissions %}
-                                   checked="checked"
-                                    {% endif %}>
-                        </label>
-                    </div>
+                    {% if model.add_perm_id %}
+                        <div class="input">
+                            <label>
+                                <input type="checkbox" class="checkbox add model-{{ model.model_name }}"
+                                       id="id_{{ model.add_perm_name }}" data-perm-id="{{ model.add_perm_id }}"
+                                        {% if model.add_perm_id in user_permissions %}
+                                       checked="checked"
+                                        {% endif %}>
+                            </label>
+                        </div>
+                    {% endif %}
                 </td>
                 <td class="change">
-                    <div class="checkbox ">
-                        <label>
-                            <input type="checkbox" class="checkbox change model-{{ model.model_name }}"
-                                   id="id_{{ model.change_perm_name }}" data-perm-id="{{ model.change_perm_id }}"
-                                    {% if model.change_perm_id in user_permissions %}
-                                   checked="checked"
-                                    {% endif %}>
-                        </label>
-                    </div>
+                    {% if model.change_perm_id %}
+                        <div class="checkbox ">
+                            <label>
+                                <input type="checkbox" class="checkbox change model-{{ model.model_name }}"
+                                       id="id_{{ model.change_perm_name }}" data-perm-id="{{ model.change_perm_id }}"
+                                        {% if model.change_perm_id in user_permissions %}
+                                       checked="checked"
+                                        {% endif %}>
+                            </label>
+                        </div>
+                    {% endif %}
                 </td>
                 <td class="delete">
+                {% if model.delete_perm_id %}
                     <div class="checkbox ">
                         <label>
                             <input type="checkbox" class="checkbox delete model-{{ model.model_name }}"
@@ -86,12 +96,30 @@
                                     {% endif %}>
                         </label>
                     </div>
+                {% endif %}
                 </td>
+            {% if custom_permissions_available %}
+            <td>
+            {% for custom_permission in model.custom_permissions %}
+                <div class="checkbox ">
+                        <label>
+                            <input type="checkbox" class="checkbox custom model-{{ model.model_name }}"
+                                   id="id_{{ custom_permission.0 }}" data-perm-id="{{ custom_permission.2 }}"
+                                    {% if custom_permission.2 in user_permissions %}
+                                   checked="checked"
+                                    {% endif %}>
+                        {{ custom_permission.1 }}
+                        </label>
+                    </div>
+            {% endfor %}
+
+            </td>
+        {% endif %}
             </tr>
         {% endfor %}
         {% if app.models %}
             <tr>
-                <td colspan="5" class="user-permissions-app-separator"></td>
+                <td colspan="{% if custom_permissions_available%}6{% else %}5{% endif %}" class="user-permissions-app-separator"></td>
             </tr>
         {% endif %}
 
@@ -106,10 +134,12 @@
         .user-permissions-app-separator {
             border-bottom: 1px solid black;
         }
+
         .app-name {
             border-right: 1px black solid;
         }
-        [dir=rtl] .app-name{
+
+        [dir=rtl] .app-name {
             border-left: 1px black solid;
             border-right: initial;
         }
@@ -117,12 +147,10 @@
         th {
             text-decoration: underline;
         }
-        .select-all{
+
+        .select-all {
             font-style: italic;
         }
 
-        .related-widget-wrapper-user-permissions {
-            width: 90%;
-        }
     </style>
 {% endblock %}

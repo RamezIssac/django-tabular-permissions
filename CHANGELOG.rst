@@ -1,3 +1,6 @@
+* 1.2 : Added logic to support model custom permissions is a table column instead of the original widget,
+  leaving the original to totally custom permissions created by pure code.
+  Added demo_proj.
 * 1.1.1: Added `model-` for model_name on input class to prevent css conflict (ie model_name called table)
 * 1.1: Support django 1.11
 * 1.0.9: Minor improve, use django's `import_string` instead of own hacky code to load the exclude function
