@@ -50,6 +50,7 @@ class TabularPermissionsWidget(FilteredSelectMultiple):
 
         for app in apps.get_app_configs():
             app_dict = {'verbose_name': force_text(app.verbose_name),
+                        'label': app.label,
                         'models': []}
 
             for model_name in app.models:

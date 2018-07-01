@@ -4,8 +4,8 @@
        data-input-name="{{ input_name }}">
     <thead>
     <tr>
-        <th> {% trans 'application' %}</th>
-        <th>{% trans 'model' %}</th>
+        <th> {% trans 'application'|capfirst %}</th>
+        <th>{% trans 'model'|capfirst %}</th>
         <th>
             {% trans 'Add' %}
             <div>
@@ -32,7 +32,7 @@
         </th>
         {% if custom_permissions_available %}
             <th>
-            {% trans 'other permissions' %}
+            {% trans 'other permissions'|capfirst %}
             </th>
         {% endif %}
     </tr>
@@ -101,7 +101,7 @@
             {% if custom_permissions_available %}
             <td>
             {% for custom_permission in model.custom_permissions %}
-                <div class="checkbox ">
+                <div class="input ">
                         <label>
                             <input type="checkbox" class="checkbox custom model-{{ model.model_name }}"
                                    id="id_{{ custom_permission.0 }}" data-perm-id="{{ custom_permission.2 }}"

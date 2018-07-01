@@ -3,6 +3,10 @@ django-tabular-permissions
 Display model permissions in a tabular widget that is user friendly, translatable and customizable.
 *Scroll down for screen shots*
 
+Version
+-------
+2.0.2 (July 1 2018)
+
 Features:
 ---------
 * Permissions and their relevant app and models names are displayed in the active language.
@@ -45,8 +49,8 @@ Tabular_permissions possible configurations and their default::
         'template': 'tabular_permissions/admin/tabular_permissions.html',
         'exclude': {
             'override': False,
-            'app': [],
-            'model': [],
+            'apps': [],
+            'models': [],
             'function':'tabular_permissions.helpers.dummy_permissions_exclude'
         },
         'auto_implement': True,
@@ -63,7 +67,7 @@ Tabular_permissions possible configurations and their default::
 
   By default ``tabular_permissions`` exclude `sessions` , `contenttypes` and `admin` apps from showing their models in the permissions table. If you want to show them you can switch ``override`` to `False`.
 
-  ``app`` & ``model`` lists would contain the names of the apps and models you wish to exclude.
+  ``apps`` & ``models`` lists would contain the names of the apps and models you wish to exclude.
 
   ``function`` is a dotted path of a custom function which receive the model as a parameter to decide either to exclude it or not, default to a dummy function that always return False (ie do not exclude)
 
