@@ -38,9 +38,9 @@
     </tr>
     </thead>
     <tbody>
-    {% for app in apps_available %}
+    {% for app in apps_available.values %}
 
-        {% for model in app.models %}
+        {% for model in app.models.values %}
 
             <tr class="{% cycle 'row1' 'row2' %}">
 

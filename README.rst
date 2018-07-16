@@ -5,7 +5,7 @@ Display model permissions in a tabular widget that is user friendly, translatabl
 
 Version
 -------
-2.0.2 (July 1 2018)
+2.1 (July 16 2018)
 
 Features:
 ---------
@@ -56,6 +56,7 @@ Tabular_permissions possible configurations and their default::
         'auto_implement': True,
         'use_for_concrete': True,
         'custom_permission_translation': 'tabular_permissions.helpers.custom_permissions_translator',
+        'apps_customization_func': 'tabular_permissions.helpers.apps_customization_func',
     }
 
 
@@ -89,6 +90,14 @@ custom_permission_translation
   A dotted path function to translate the custom permission.
   This function gets passed the permissions `codename`, `verbose_name` and its relevant `content_type_id`.
   The function will try to translate the permission verbose_name.
+
+apps_customization_func
+  A dotted path function to control the whole permissions objects passed to the widget.
+  Sometimes you use custom menu where apps and models are ordered in a more "user friendly" manner and not necessarily
+  in the "actual programmatic" apps & models order.
+  You can use this option to get a hold of the whole ordered dict and shuffle its content around moving
+  models from one app to the other and do all kind of crazy stuff to get just the right table of permissions.
+
 
 JavaScript:
 -----------

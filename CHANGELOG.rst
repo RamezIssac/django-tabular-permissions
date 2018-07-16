@@ -1,6 +1,9 @@
 ----------
 CHANGELOG
 ----------
+ v 2.1 (16 July 2018)
+  - Adds `apps_customization_func` option to allow a full apps customization control. (Thanks to KuwaitNet)
+
  v 2.0.2 (July 1 2018)
   - Include locale in manifest
   - fix a problem with exclude settings & use plural instead of singular in exclude apps and models settings,

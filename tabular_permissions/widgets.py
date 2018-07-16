@@ -1,4 +1,7 @@
 from __future__ import unicode_literals
+
+from collections import OrderedDict
+
 from django.apps import apps
 from django.contrib.auth.models import Permission
 from django.contrib.admin.widgets import FilteredSelectMultiple
@@ -8,7 +11,7 @@ from django.template.loader import get_template
 from django.utils.encoding import force_text
 from django.utils.safestring import mark_safe
 from .app_settings import EXCLUDE_FUNCTION, EXCLUDE_APPS, \
-    EXCLUDE_MODELS, TEMPLATE, USE_FOR_CONCRETE, TRANSLATION_FUNC
+    EXCLUDE_MODELS, TEMPLATE, USE_FOR_CONCRETE, TRANSLATION_FUNC, APPS_CUSTOMIZATION_FUNC
 from .helpers import get_perm_name
 
 
@@ -33,7 +36,7 @@ class TabularPermissionsWidget(FilteredSelectMultiple):
 
     def render(self, name, value, attrs=None, renderer=None):
         choices = self.choices
-        apps_available = []  # main container to send to template
+        apps_available = OrderedDict() # []  # main container to send to template
         user_permissions = Permission.objects.filter(id__in=value or []).values_list('id', flat=True)
         all_perms = Permission.objects.all().values('id', 'codename', 'content_type_id').order_by('codename')
         excluded_perms = set([])
@@ -51,7 +54,7 @@ class TabularPermissionsWidget(FilteredSelectMultiple):
         for app in apps.get_app_configs():
             app_dict = {'verbose_name': force_text(app.verbose_name),
                         'label': app.label,
-                        'models': []}
+                        'models': OrderedDict()}
 
             for model_name in app.models:
                 model_custom_permissions = []
@@ -93,7 +96,7 @@ class TabularPermissionsWidget(FilteredSelectMultiple):
                             or EXCLUDE_FUNCTION(model):
                         continue
 
-                    app_dict['models'].append({
+                    app_dict['models'][model_name] = {
                         'model_name': model_name,
                         'model': model,
                         'verbose_name_plural': force_text(model._meta.verbose_name_plural),
@@ -105,11 +108,12 @@ class TabularPermissionsWidget(FilteredSelectMultiple):
                         'delete_perm_id': delete_perm_id,
                         'delete_perm_name': delete_perm_name,
                         'custom_permissions': model_custom_permissions,
-                    })
+                    }
 
             if app.models:
-                apps_available.append(app_dict)
+                apps_available[app.label] = app_dict
 
+        apps_available = APPS_CUSTOMIZATION_FUNC(apps_available)
         request_context = {'apps_available': apps_available, 'user_permissions': user_permissions,
                            'codename_id_map': codename_id_map, 'input_name': self.input_name,
                            'custom_permissions_available': custom_permissions_available}
