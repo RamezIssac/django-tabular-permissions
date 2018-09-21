@@ -64,9 +64,11 @@ class TabularPermissionsWidget(FilteredSelectMultiple):
                 ct_id = ContentType.objects.get_for_model(model,
                                                           for_concrete_model=USE_FOR_CONCRETE).pk
 
+                view_perm_name = get_perm_name(model_name, 'view')
                 add_perm_name = get_perm_name(model_name, 'add')
                 change_perm_name = get_perm_name(model_name, 'change')
                 delete_perm_name = get_perm_name(model_name, 'delete')
+                view_perm_id = codename_id_map.get('%s_%s' % (view_perm_name, ct_id), False)
                 add_perm_id = codename_id_map.get('%s_%s' % (add_perm_name, ct_id), False)
                 change_perm_id = codename_id_map.get('%s_%s' % (change_perm_name, ct_id), False)
                 delete_perm_id = codename_id_map.get('%s_%s' % (delete_perm_name, ct_id), False)
@@ -80,9 +82,9 @@ class TabularPermissionsWidget(FilteredSelectMultiple):
                         )
                         model_custom_permissions_ids.append(c_perm_id)
 
-                if (
-                        add_perm_id or change_perm_id or delete_perm_id or model_custom_permissions):  # and not {add_perm_id, change_perm_id, delete_perm_id} & excluded_perms:
-                    excluded_perms.update([add_perm_id, change_perm_id, delete_perm_id] + model_custom_permissions_ids)
+                if (view_perm_id or add_perm_id or change_perm_id or delete_perm_id or model_custom_permissions):  # and not {add_perm_id, change_perm_id, delete_perm_id} & excluded_perms:
+                    excluded_perms.update([view_perm_id, add_perm_id, change_perm_id, delete_perm_id] + model_custom_permissions_ids)
+                    reminder_perms.pop('%s_%s' % (view_perm_name, ct_id), False)
                     reminder_perms.pop('%s_%s' % (add_perm_name, ct_id), False)
                     reminder_perms.pop('%s_%s' % (change_perm_name, ct_id), False)
                     reminder_perms.pop('%s_%s' % (delete_perm_name, ct_id), False)
@@ -101,6 +103,8 @@ class TabularPermissionsWidget(FilteredSelectMultiple):
                         'model': model,
                         'verbose_name_plural': force_text(model._meta.verbose_name_plural),
                         'verbose_name': force_text(model._meta.verbose_name),
+                        'view_perm_id': view_perm_id,
+                        'view_perm_name': view_perm_name,
                         'add_perm_id': add_perm_id,
                         'add_perm_name': add_perm_name,
                         'change_perm_id': change_perm_id,
