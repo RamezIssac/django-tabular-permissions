@@ -7,11 +7,14 @@ python:
 env:
   - DJANGO=django==1.11.13
   - DJANGO=django==2.0.6
+  - DJANGO=django==2.1.1
 
 matrix:
   exclude:
     - python: "2.7"
       env: DJANGO=django==2.0.6
+    - python: "2.7"
+      env: DJANGO=django==2.1.1
 
 before_install:
   - wget https://github.com/mozilla/geckodriver/releases/download/v0.17.0/geckodriver-v0.17.0-linux64.tar.gz

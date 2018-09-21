@@ -20,8 +20,8 @@ Features:
 
 
 
-.. image:: https://travis-ci.org/RamezIssac/django-tabular-permissions.svg?branch=master
-    :target: https://travis-ci.org/RamezIssac/django-tabular-permissions
+.. image:: https://travis-ci.org/ihabhussein/django-tabular-permissions.svg?branch=view_permission
+    :target: https://travis-ci.org/ihabhussein/django-tabular-permissions
 
 
 Installation
