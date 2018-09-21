@@ -15,13 +15,13 @@ Features:
 * RTL ready, Bootstrap ready.
 * Easy customize-able look.
 * Django >= 1.11
-* Tested on Python 2.7, 3.5, 3.6 & 3.7, Django 1.11 & 2.0.
+* Tested on Python 2.7, 3.5, 3.6 & 3.7, Django 1.11 & 2.1.
 * Default `FilteredSelectMultiple` widget will appear only if you have custom permissions that are not model related (ie directly created by code or hand)
 
 
 
-.. image:: https://travis-ci.org/RamezIssac/django-tabular-permissions.svg?branch=master
-    :target: https://travis-ci.org/RamezIssac/django-tabular-permissions
+.. image:: https://travis-ci.org/ihabhussein/django-tabular-permissions.svg?branch=view_permission
+    :target: https://travis-ci.org/ihabhussein/django-tabular-permissions
 
 
 Installation

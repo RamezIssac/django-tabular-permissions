@@ -1,6 +1,12 @@
     (function($){
         $(document).ready(function () {
         $(".related-widget-wrapper:has(table)").addClass('related-widget-wrapper-user-permissions');
+        $('#perm_view_select_all').on('change', function () {
+            var state = $(this).prop('checked');
+            $('#tabular_permissions').find('tr td.view').find('input').each(function (i, e) {
+                $(e).prop('checked', state)
+            })
+        });
         $('#perm_add_select_all').on('change', function () {
             var state = $(this).prop('checked');
             $('#tabular_permissions').find('tr td.add').find('input').each(function (i, e) {

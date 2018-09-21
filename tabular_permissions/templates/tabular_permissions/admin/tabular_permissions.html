@@ -7,6 +7,14 @@
         <th> {% trans 'application'|capfirst %}</th>
         <th>{% trans 'model'|capfirst %}</th>
         <th>
+            {% trans 'View' %}
+            <div>
+                <input type="checkbox" class="checkbox select-all view"
+                       id="perm_view_select_all">
+                {% trans 'All' %}
+            </div>
+        </th>
+        <th>
             {% trans 'Add' %}
             <div>
                 <input type="checkbox" class="checkbox select-all add"
@@ -58,6 +66,19 @@
                         {% trans 'All' %}
                         {#                        </label>#}
                     </div>
+                </td>
+                <td class="view">
+                    {% if model.view_perm_id %}
+                        <div class="input">
+                            <label>
+                                <input type="checkbox" class="checkbox view model-{{ model.model_name }}"
+                                       id="id_{{ model.view_perm_name }}" data-perm-id="{{ model.view_perm_id }}"
+                                        {% if model.view_perm_id in user_permissions %}
+                                       checked="checked"
+                                        {% endif %}>
+                            </label>
+                        </div>
+                    {% endif %}
                 </td>
                 <td class="add">
                     {% if model.add_perm_id %}
@@ -119,7 +140,7 @@
         {% endfor %}
         {% if app.models %}
             <tr>
-                <td colspan="{% if custom_permissions_available%}6{% else %}5{% endif %}" class="user-permissions-app-separator"></td>
+                <td colspan="{% if custom_permissions_available%}7{% else %}6{% endif %}" class="user-permissions-app-separator"></td>
             </tr>
         {% endif %}
 
