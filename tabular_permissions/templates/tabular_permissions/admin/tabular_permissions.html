@@ -6,6 +6,7 @@
     <tr>
         <th> {% trans 'application'|capfirst %}</th>
         <th>{% trans 'model'|capfirst %}</th>
+        {% if django_supports_view_permissions %}
         <th>
             {% trans 'View' %}
             <div>
@@ -14,6 +15,7 @@
                 {% trans 'All' %}
             </div>
         </th>
+        {% endif %}
         <th>
             {% trans 'Add' %}
             <div>
@@ -67,6 +69,7 @@
                         {#                        </label>#}
                     </div>
                 </td>
+                {% if django_supports_view_permissions %}
                 <td class="view">
                     {% if model.view_perm_id %}
                         <div class="input">
@@ -80,6 +83,7 @@
                         </div>
                     {% endif %}
                 </td>
+                {% endif %}
                 <td class="add">
                     {% if model.add_perm_id %}
                         <div class="input">
