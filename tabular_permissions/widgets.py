@@ -2,6 +2,7 @@ from __future__ import unicode_literals
 
 from collections import OrderedDict
 
+from django import VERSION
 from django.apps import apps
 from django.contrib.auth.models import Permission
 from django.contrib.admin.widgets import FilteredSelectMultiple
@@ -120,7 +121,8 @@ class TabularPermissionsWidget(FilteredSelectMultiple):
         apps_available = APPS_CUSTOMIZATION_FUNC(apps_available)
         request_context = {'apps_available': apps_available, 'user_permissions': user_permissions,
                            'codename_id_map': codename_id_map, 'input_name': self.input_name,
-                           'custom_permissions_available': custom_permissions_available}
+                           'custom_permissions_available': custom_permissions_available,
+                           'django_supports_view_permissions': VERSION >= (2, 1, 0),}
         body = get_template(TEMPLATE).render(request_context).encode("utf-8")
         self.managed_perms = excluded_perms
         if reminder_perms:
