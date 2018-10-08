@@ -6,6 +6,16 @@
     <tr>
         <th> {% trans 'application'|capfirst %}</th>
         <th>{% trans 'model'|capfirst %}</th>
+        {% if django_supports_view_permissions %}
+        <th>
+            {% trans 'View' %}
+            <div>
+                <input type="checkbox" class="checkbox select-all view"
+                       id="perm_view_select_all">
+                {% trans 'All' %}
+            </div>
+        </th>
+        {% endif %}
         <th>
             {% trans 'Add' %}
             <div>
@@ -59,6 +69,21 @@
                         {#                        </label>#}
                     </div>
                 </td>
+                {% if django_supports_view_permissions %}
+                <td class="view">
+                    {% if model.view_perm_id %}
+                        <div class="input">
+                            <label>
+                                <input type="checkbox" class="checkbox view model-{{ model.model_name }}"
+                                       id="id_{{ model.view_perm_name }}" data-perm-id="{{ model.view_perm_id }}"
+                                        {% if model.view_perm_id in user_permissions %}
+                                       checked="checked"
+                                        {% endif %}>
+                            </label>
+                        </div>
+                    {% endif %}
+                </td>
+                {% endif %}
                 <td class="add">
                     {% if model.add_perm_id %}
                         <div class="input">
@@ -119,7 +144,7 @@
         {% endfor %}
         {% if app.models %}
             <tr>
-                <td colspan="{% if custom_permissions_available%}6{% else %}5{% endif %}" class="user-permissions-app-separator"></td>
+                <td colspan="{{ colspan }}" class="user-permissions-app-separator"></td>
             </tr>
         {% endif %}
 

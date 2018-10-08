@@ -1,6 +1,9 @@
 ----------
 CHANGELOG
 ----------
+ v 2.2 (8 October 2018)
+  - Adds view permission supporting Django 2.1
+
  v 2.1 (16 July 2018)
   - Adds `apps_customization_func` option to allow a full apps customization control. (Thanks to KuwaitNet)
 
