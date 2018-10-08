@@ -144,7 +144,7 @@
         {% endfor %}
         {% if app.models %}
             <tr>
-                <td colspan="{% if custom_permissions_available%}7{% else %}6{% endif %}" class="user-permissions-app-separator"></td>
+                <td colspan="{{ colspan }}" class="user-permissions-app-separator"></td>
             </tr>
         {% endif %}
 

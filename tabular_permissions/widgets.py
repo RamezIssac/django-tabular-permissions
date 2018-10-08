@@ -117,11 +117,18 @@ class TabularPermissionsWidget(FilteredSelectMultiple):
 
             if app.models:
                 apps_available[app.label] = app_dict
+        if VERSION >= (2, 1, 0) and custom_permissions_available:
+            colspan = 7
+        elif VERSION >= (2, 1, 0) or custom_permissions_available:
+            colspan = 6
+        else:
+            colspan = 5
 
         apps_available = APPS_CUSTOMIZATION_FUNC(apps_available)
         request_context = {'apps_available': apps_available, 'user_permissions': user_permissions,
                            'codename_id_map': codename_id_map, 'input_name': self.input_name,
                            'custom_permissions_available': custom_permissions_available,
+                           'colspan': colspan,
                            'django_supports_view_permissions': VERSION >= (2, 1, 0),}
         body = get_template(TEMPLATE).render(request_context).encode("utf-8")
         self.managed_perms = excluded_perms
