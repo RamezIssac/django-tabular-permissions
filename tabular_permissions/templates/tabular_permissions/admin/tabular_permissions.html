@@ -4,8 +4,18 @@
        data-input-name="{{ input_name }}">
     <thead>
     <tr>
-        <th> {% trans 'application' %}</th>
-        <th>{% trans 'model' %}</th>
+        <th> {% trans 'application'|capfirst %}</th>
+        <th>{% trans 'model'|capfirst %}</th>
+        {% if django_supports_view_permissions %}
+        <th>
+            {% trans 'View' %}
+            <div>
+                <input type="checkbox" class="checkbox select-all view"
+                       id="perm_view_select_all">
+                {% trans 'All' %}
+            </div>
+        </th>
+        {% endif %}
         <th>
             {% trans 'Add' %}
             <div>
@@ -32,15 +42,15 @@
         </th>
         {% if custom_permissions_available %}
             <th>
-            {% trans 'other permissions' %}
+            {% trans 'other permissions'|capfirst %}
             </th>
         {% endif %}
     </tr>
     </thead>
     <tbody>
-    {% for app in apps_available %}
+    {% for app in apps_available.values %}
 
-        {% for model in app.models %}
+        {% for model in app.models.values %}
 
             <tr class="{% cycle 'row1' 'row2' %}">
 
@@ -59,6 +69,21 @@
                         {#                        </label>#}
                     </div>
                 </td>
+                {% if django_supports_view_permissions %}
+                <td class="view">
+                    {% if model.view_perm_id %}
+                        <div class="input">
+                            <label>
+                                <input type="checkbox" class="checkbox view model-{{ model.model_name }}"
+                                       id="id_{{ model.view_perm_name }}" data-perm-id="{{ model.view_perm_id }}"
+                                        {% if model.view_perm_id in user_permissions %}
+                                       checked="checked"
+                                        {% endif %}>
+                            </label>
+                        </div>
+                    {% endif %}
+                </td>
+                {% endif %}
                 <td class="add">
                     {% if model.add_perm_id %}
                         <div class="input">
@@ -101,7 +126,7 @@
             {% if custom_permissions_available %}
             <td>
             {% for custom_permission in model.custom_permissions %}
-                <div class="checkbox ">
+                <div class="input ">
                         <label>
                             <input type="checkbox" class="checkbox custom model-{{ model.model_name }}"
                                    id="id_{{ custom_permission.0 }}" data-perm-id="{{ custom_permission.2 }}"
@@ -119,7 +144,7 @@
         {% endfor %}
         {% if app.models %}
             <tr>
-                <td colspan="{% if custom_permissions_available%}6{% else %}5{% endif %}" class="user-permissions-app-separator"></td>
+                <td colspan="{% if custom_permissions_available%}7{% else %}6{% endif %}" class="user-permissions-app-separator"></td>
             </tr>
         {% endif %}
 

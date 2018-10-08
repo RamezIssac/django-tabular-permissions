@@ -26,3 +26,13 @@ def custom_permissions_translator(codename, verbose_name, content_type_id):
     :return: a translated verbose_name
     """
     return _(verbose_name)
+
+
+def apps_customization_func(apps):
+    """
+    This is a dummy method simulating a final apps adjustment
+    :param apps: the OrderedDict
+    :return: OrderedDict with teh custom order
+    """
+
+    return apps
