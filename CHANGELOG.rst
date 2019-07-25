@@ -1,6 +1,9 @@
 ----------
 CHANGELOG
 ----------
+ v 2.3 (25 July 2019)
+  - Added native javascript event to wait for the full page load to start (Thanks @Filipe-Souza)
+
  v 2.2 (8 October 2018)
   - Adds view permission supporting Django 2.1
 

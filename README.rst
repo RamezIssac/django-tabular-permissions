@@ -5,7 +5,7 @@ Display model permissions in a tabular widget that is user friendly, translatabl
 
 Version
 -------
-2.2 (October 8 2018)
+2.3 (July 25 2019)
 
 Features:
 ---------
