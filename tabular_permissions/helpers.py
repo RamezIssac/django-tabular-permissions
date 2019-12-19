@@ -36,3 +36,14 @@ def apps_customization_func(apps):
     """
 
     return apps
+
+
+def custom_permissions_customization_func(permissions):
+    """
+    What if you removed an app from the INSTALLED_APPS, its permissions will be displayed on the custom permission
+    widget.
+    This is a change to further customize what will appear.
+    :param permissions:
+    :return:
+    """
+    return permissions

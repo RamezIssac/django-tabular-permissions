@@ -5,7 +5,7 @@ Display model permissions in a tabular widget that is user friendly, translatabl
 
 Version
 -------
-2.3 (July 25 2019)
+2.4 (December 19 2019)
 
 Features:
 ---------
@@ -16,7 +16,7 @@ Features:
 * RTL ready, Bootstrap ready.
 * Easy customize-able look.
 * Django >= 1.11
-* Tested on Python 2.7, 3.5, 3.6 & 3.7, Django 1.11, 2.0 & 2.1.
+* Python 2.7, 3.6, 3.7 & 3.8. Django 1.11, 2.1 & 3.0
 * Default `FilteredSelectMultiple` widget will appear only if you have custom permissions that are not model related (ie directly created by code or hand)
 
 
@@ -58,6 +58,7 @@ Tabular_permissions possible configurations and their default::
         'use_for_concrete': True,
         'custom_permission_translation': 'tabular_permissions.helpers.custom_permissions_translator',
         'apps_customization_func': 'tabular_permissions.helpers.apps_customization_func',
+        'custom_permissions_customization_func': 'tabular_permissions.helpers.custom_permissions_customization_func',
     }
 
 
@@ -100,6 +101,12 @@ apps_customization_func
   You can use this option to get a hold of the whole ordered dict and shuffle its content around moving
   models from one app to the other and do all kind of crazy stuff to get just the right table of permissions.
 
+custom_permissions_customization_func
+  A dotted path function to control the "extra" permissions which will be displayed on the default django widget.
+  Suppose a model is removed, or an app is commented out of `INSTALLED_APPS`; its permissions are still in the
+  permissions table, and it will be picked up.
+  Use this function to manipulate and order those permissions and return them .
+  The permissions are passed a list of tuples , like this ``[(perm_id, perm_name), (perm_id, perm_name), ...]``
 
 JavaScript:
 -----------

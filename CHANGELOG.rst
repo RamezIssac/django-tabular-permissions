@@ -1,6 +1,9 @@
 ----------
 CHANGELOG
 ----------
+ v 2.4 (19 December 2019)
+  - Added `custom_permissions_customization_func` to control the extra permissions not displayed on main permissions table.
+
  v 2.3 (25 July 2019)
   - Added native javascript event to wait for the full page load to start (Thanks @Filipe-Souza)
 

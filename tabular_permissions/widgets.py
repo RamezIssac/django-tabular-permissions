@@ -12,7 +12,8 @@ from django.template.loader import get_template
 from django.utils.encoding import force_text
 from django.utils.safestring import mark_safe
 from .app_settings import EXCLUDE_FUNCTION, EXCLUDE_APPS, \
-    EXCLUDE_MODELS, TEMPLATE, USE_FOR_CONCRETE, TRANSLATION_FUNC, APPS_CUSTOMIZATION_FUNC
+    EXCLUDE_MODELS, TEMPLATE, USE_FOR_CONCRETE, TRANSLATION_FUNC, APPS_CUSTOMIZATION_FUNC, \
+    CUSTOM_PERMISSIONS_CUSTOMIZATION_FUNC
 from .helpers import get_perm_name
 
 
@@ -37,7 +38,7 @@ class TabularPermissionsWidget(FilteredSelectMultiple):
 
     def render(self, name, value, attrs=None, renderer=None):
         choices = self.choices
-        apps_available = OrderedDict() # []  # main container to send to template
+        apps_available = OrderedDict()  # []  # main container to send to template
         user_permissions = Permission.objects.filter(id__in=value or []).values_list('id', flat=True)
         all_perms = Permission.objects.all().values('id', 'codename', 'content_type_id').order_by('codename')
         excluded_perms = set([])
@@ -83,8 +84,10 @@ class TabularPermissionsWidget(FilteredSelectMultiple):
                         )
                         model_custom_permissions_ids.append(c_perm_id)
 
-                if (view_perm_id or add_perm_id or change_perm_id or delete_perm_id or model_custom_permissions):  # and not {add_perm_id, change_perm_id, delete_perm_id} & excluded_perms:
-                    excluded_perms.update([view_perm_id, add_perm_id, change_perm_id, delete_perm_id] + model_custom_permissions_ids)
+                if (
+                        view_perm_id or add_perm_id or change_perm_id or delete_perm_id or model_custom_permissions):  # and not {add_perm_id, change_perm_id, delete_perm_id} & excluded_perms:
+                    excluded_perms.update(
+                        [view_perm_id, add_perm_id, change_perm_id, delete_perm_id] + model_custom_permissions_ids)
                     reminder_perms.pop('%s_%s' % (view_perm_name, ct_id), False)
                     reminder_perms.pop('%s_%s' % (add_perm_name, ct_id), False)
                     reminder_perms.pop('%s_%s' % (change_perm_name, ct_id), False)
@@ -92,7 +95,8 @@ class TabularPermissionsWidget(FilteredSelectMultiple):
                     for c, v, _id in model_custom_permissions:
                         reminder_perms.pop('%s_%s' % (c, ct_id), False)
 
-                    # because the logic of exclusion should/would work on both the tabular_permissin widget and the normal widget
+                    # Because the logic of exclusion should/would work on both the tabular_permissin widget
+                    # and the normal widget
                     # ie bydefautlwe exclude the session, admin log permissions and we dont want that on either widgets
                     if app.label in EXCLUDE_APPS \
                             or model_name in EXCLUDE_MODELS \
@@ -129,7 +133,7 @@ class TabularPermissionsWidget(FilteredSelectMultiple):
                            'codename_id_map': codename_id_map, 'input_name': self.input_name,
                            'custom_permissions_available': custom_permissions_available,
                            'colspan': colspan,
-                           'django_supports_view_permissions': VERSION >= (2, 1, 0),}
+                           'django_supports_view_permissions': VERSION >= (2, 1, 0), }
         body = get_template(TEMPLATE).render(request_context).encode("utf-8")
         self.managed_perms = excluded_perms
         if reminder_perms:
@@ -142,6 +146,7 @@ class TabularPermissionsWidget(FilteredSelectMultiple):
             # if the style=display:none
             original_class = SelectMultiple(attrs, reminder_choices)
         else:
+            reminder_choices = CUSTOM_PERMISSIONS_CUSTOMIZATION_FUNC(reminder_choices)
             original_class = FilteredSelectMultiple(self.verbose_name, self.is_stacked, attrs, reminder_choices)
 
         output = original_class.render(name, value, attrs, renderer)
