@@ -140,13 +140,15 @@ class TabularPermissionsWidget(FilteredSelectMultiple):
             self.hide_original = False
 
         reminder_choices = get_reminder_permissions_iterator(choices, reminder_perms)
+
+        # filter the left over permission
+        reminder_choices = CUSTOM_PERMISSIONS_CUSTOMIZATION_FUNC(reminder_choices)
         if not reminder_choices:
             attrs['style'] = " display:none "
             # switching to "normal" SelectMultiple as FilteredSelectMultiple will render the widget even
             # if the style=display:none
             original_class = SelectMultiple(attrs, reminder_choices)
         else:
-            reminder_choices = CUSTOM_PERMISSIONS_CUSTOMIZATION_FUNC(reminder_choices)
             original_class = FilteredSelectMultiple(self.verbose_name, self.is_stacked, attrs, reminder_choices)
 
         output = original_class.render(name, value, attrs, renderer)
