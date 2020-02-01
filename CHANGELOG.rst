@@ -1,6 +1,10 @@
 ----------
 CHANGELOG
 ----------
+ v 2.5 (1 February 2020)
+  - Hinted `collectstatic` in installation docs (#14)
+  - Fixes possible non unique HTML ID. (#13)
+
  v 2.4 (19 December 2019)
   - Added `custom_permissions_customization_func` to control the extra permissions not displayed on main permissions table.
 

@@ -40,6 +40,11 @@ and add "tabular_permissions" to your INSTALLED_APPS setting (at any place after
         'tabular_permissions',
     ]
 
+Finally, execute::
+
+    python manage.py collectstatic
+
+
 then navigate to User and/or Group change form to see `tabular_permissions` in action.
 
 Configuration:
