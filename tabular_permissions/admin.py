@@ -1,5 +1,5 @@
 from django.contrib import admin
-from django.contrib.auth.admin import Group, GroupAdmin
+from django.contrib.auth.admin import Group, GroupAdmin, UserAdmin
 from django.contrib.auth import get_user_model
 from django.core.exceptions import ImproperlyConfigured
 from tabular_permissions.widgets import TabularPermissionsWidget
@@ -27,8 +27,12 @@ class GroupTabularPermissionsMixin(object):
         return field
 
 
-class TabularPermissionsUserAdmin(UserTabularPermissionsMixin, admin.site._registry[User].__class__):
-    pass
+try:
+    class TabularPermissionsUserAdmin(UserTabularPermissionsMixin, admin.site._registry[User].__class__):
+        pass
+except:
+    class TabularPermissionsUserAdmin(UserTabularPermissionsMixin, UserAdmin):
+        pass
 
 
 class TabularPermissionsGroupAdmin(GroupTabularPermissionsMixin, GroupAdmin):
