@@ -5,7 +5,7 @@ Display model permissions in a tabular widget that is user friendly, translatabl
 
 Version
 -------
-2.4 (December 19 2019)
+2.6 (April 3rd 2020)
 
 Features:
 ---------
@@ -123,7 +123,7 @@ Located at 'static/tabular_permissions/tabular_permissions.js', it have 2 respon
 
 Compatibility:
 --------------
-Current version 2.0 supports only Django >= 1.11
+Version >= 2.0  only supports Django >= 1.11
 For earlier versions of django use django-tabular-permissions 1.0.9.
 
 

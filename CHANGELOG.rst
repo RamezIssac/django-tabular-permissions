@@ -1,6 +1,9 @@
 ----------
 CHANGELOG
 ----------
+ v 2.6 (3 April 2020)
+  - Better aim at working with Custom User/Group ModelAdmin out-of-box (Thanks @abahnihi )
+
  v 2.5 (1 February 2020)
   - Hinted `collectstatic` in installation docs (#14)
   - Fixes possible non unique HTML ID. (#13)
