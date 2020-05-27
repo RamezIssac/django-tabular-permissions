@@ -152,3 +152,13 @@ With Custom permission behaviour
 Enjoy and feel free to report any bugs or make pull requests.
 
 Cheers ;-)
+
+Cross Reference
+---------------
+
+If you like this package, chances are you may like those packages too!
+
+`Django Slick Reporting <https://github.com/ra-systems/django-slick-reporting>`_ Powerful and Efficient reporting engine with Charting capabilities.
+
+`Django Ra ERP Framework <https://github.com/ra-systems/RA>`_ A framework to build business solutions with ease.
+
