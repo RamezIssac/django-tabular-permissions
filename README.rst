@@ -5,7 +5,7 @@ Display model permissions in a tabular widget that is user friendly, translatabl
 
 Version
 -------
-2.6 (April 3rd 2020)
+2.7 (August 16 2020)
 
 Features:
 ---------
@@ -16,7 +16,7 @@ Features:
 * RTL ready, Bootstrap ready.
 * Easy customize-able look.
 * Django >= 1.11
-* Python 2.7, 3.6, 3.7 & 3.8. Django 1.11, 2.1 & 3.0
+* Python 2.7, 3.6, 3.7 & 3.8. Django 1.11, 2.1, 3.0 & 3.1
 * Default `FilteredSelectMultiple` widget will appear only if you have custom permissions that are not model related (ie directly created by code or hand)
 
 

@@ -1,6 +1,10 @@
 ----------
 CHANGELOG
 ----------
+ v 2.7 (16 August 2020)
+  - Assert Django 3.1 Support.
+  - Adds Django 3.1 to travis matrix.
+
  v 2.6 (3 April 2020)
   - Better aim at working with Custom User/Group ModelAdmin out-of-box (Thanks @abahnihi )
 
