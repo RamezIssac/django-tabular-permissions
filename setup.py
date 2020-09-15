@@ -9,7 +9,7 @@ os.chdir(os.path.normpath(os.path.join(os.path.abspath(__file__), os.pardir)))
 
 setup(
     name='django-tabular-permissions',
-    version='2.7',
+    version='2.8',
     packages=['tabular_permissions'],
     include_package_data=True,
     license='BSD License',
