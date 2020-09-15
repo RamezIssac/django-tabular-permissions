@@ -10,7 +10,7 @@ TABULAR_PERMISSIONS_CONFIG = {
         'function':'tabular_permissions.helpers.dummy_permissions_exclude'
     },
     'auto_implement': True,
-    'use_for_concrete': True,
+    'use_for_concrete': False,
     'custom_permission_translation': 'tabular_permissions.helpers.custom_permissions_translator',
     'apps_customization_func': 'tabular_permissions.helpers.apps_customization_func',
     'custom_permissions_customization_func': 'tabular_permissions.helpers.custom_permissions_customization_func',

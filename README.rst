@@ -60,7 +60,7 @@ Tabular_permissions possible configurations and their default::
             'function':'tabular_permissions.helpers.dummy_permissions_exclude'
         },
         'auto_implement': True,
-        'use_for_concrete': True,
+        'use_for_concrete': False,
         'custom_permission_translation': 'tabular_permissions.helpers.custom_permissions_translator',
         'apps_customization_func': 'tabular_permissions.helpers.apps_customization_func',
         'custom_permissions_customization_func': 'tabular_permissions.helpers.custom_permissions_customization_func',
@@ -90,9 +90,11 @@ auto_implement
      See ``tabular_permissions.admin`` for information.
 
 use_for_concrete
-  There is an inconsistency with proxy models permissions (Django ticket `11154 <https://code.djangoproject.com/ticket/11154>`_).
+  Default: False (new in version 2.8)
 
-  So in case you have proxy models and you created their permissions by hand (via this `gist <https://gist.github.com/magopian/7543724>`_ maybe), then turn off this option in order to correctly assign your newly created permissions.
+  There was an inconsistency with proxy models permissions (Django ticket `11154 <https://code.djangoproject.com/ticket/11154>`_) which got fixed in Django 2.1
+  In case you're on an django <2.1 and you have proxy models and you created their permissions by hand (via this `gist <https://gist.github.com/magopian/7543724>`_ maybe), then turn off this option in order to correctly assign your newly created permissions.
+  For django > 2.1, leave it as is you should be good.
 
 custom_permission_translation
   A dotted path function to translate the custom permission.

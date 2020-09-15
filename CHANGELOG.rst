@@ -1,6 +1,9 @@
 ----------
 CHANGELOG
 ----------
+ v 2.8 (15 September 2020)
+  - Changed default of use_for_concrete
+
  v 2.7 (16 August 2020)
   - Assert Django 3.1 Support.
   - Adds Django 3.1 to travis matrix.
