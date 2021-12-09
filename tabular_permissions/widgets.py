@@ -70,10 +70,12 @@ class TabularPermissionsWidget(FilteredSelectMultiple):
                 add_perm_name = get_perm_name(model_name, 'add')
                 change_perm_name = get_perm_name(model_name, 'change')
                 delete_perm_name = get_perm_name(model_name, 'delete')
-                view_perm_id = codename_id_map.get('%s_%s' % (view_perm_name, ct_id), False)
-                add_perm_id = codename_id_map.get('%s_%s' % (add_perm_name, ct_id), False)
-                change_perm_id = codename_id_map.get('%s_%s' % (change_perm_name, ct_id), False)
-                delete_perm_id = codename_id_map.get('%s_%s' % (delete_perm_name, ct_id), False)
+
+                view_perm_id = codename_id_map.get('%s_%s' % (view_perm_name, ct_id),
+                                                   False) if 'view' in model._meta.default_permissions else False
+                add_perm_id = codename_id_map.get('%s_%s' % (add_perm_name, ct_id), False) if 'add' in model._meta.default_permissions else False
+                change_perm_id = codename_id_map.get('%s_%s' % (change_perm_name, ct_id), False) if 'change' in model._meta.default_permissions else False
+                delete_perm_id = codename_id_map.get('%s_%s' % (delete_perm_name, ct_id), False) if 'delete' in model._meta.default_permissions else False
                 if model._meta.permissions:
                     custom_permissions_available = True
                     for codename, perm_name in model._meta.permissions:
