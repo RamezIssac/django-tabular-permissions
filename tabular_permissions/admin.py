@@ -9,6 +9,7 @@ User = get_user_model()
 
 
 class UserTabularPermissionsMixin(object):
+
     def formfield_for_manytomany(self, db_field, request=None, **kwargs):
         field = super(UserTabularPermissionsMixin, self).formfield_for_manytomany(db_field, request, **kwargs)
         if db_field.name == 'user_permissions':
