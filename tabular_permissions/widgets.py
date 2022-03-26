@@ -9,7 +9,7 @@ from django.contrib.admin.widgets import FilteredSelectMultiple
 from django.contrib.contenttypes.models import ContentType
 from django.forms import SelectMultiple
 from django.template.loader import get_template
-from django.utils.encoding import force_text
+from django.utils.encoding import force_str
 from django.utils.safestring import mark_safe
 from .app_settings import EXCLUDE_FUNCTION, EXCLUDE_APPS, \
     EXCLUDE_MODELS, TEMPLATE, USE_FOR_CONCRETE, TRANSLATION_FUNC, APPS_CUSTOMIZATION_FUNC, \
@@ -54,7 +54,7 @@ class TabularPermissionsWidget(FilteredSelectMultiple):
         custom_permissions_available = False
 
         for app in apps.get_app_configs():
-            app_dict = {'verbose_name': force_text(app.verbose_name),
+            app_dict = {'verbose_name': force_str(app.verbose_name),
                         'label': app.label,
                         'models': OrderedDict()}
 
@@ -111,8 +111,8 @@ class TabularPermissionsWidget(FilteredSelectMultiple):
                     app_dict['models'][model_name] = {
                         'model_name': model_name,
                         'model': model,
-                        'verbose_name_plural': force_text(model._meta.verbose_name_plural),
-                        'verbose_name': force_text(model._meta.verbose_name),
+                        'verbose_name_plural': force_str(model._meta.verbose_name_plural),
+                        'verbose_name': force_str(model._meta.verbose_name),
                         'view_perm_id': view_perm_id,
                         'view_perm_name': view_perm_name,
                         'add_perm_id': add_perm_id,
@@ -159,5 +159,5 @@ class TabularPermissionsWidget(FilteredSelectMultiple):
         output = original_class.render(name, value, attrs, renderer)
 
         initial = mark_safe(''.join(output))
-        response = ' <hr/>'.join([force_text(body), force_text(initial)])
+        response = ' <hr/>'.join([force_str(body), force_str(initial)])
         return mark_safe(response)
