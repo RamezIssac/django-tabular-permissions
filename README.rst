@@ -11,7 +11,7 @@ Features:
 ---------
 * Permissions and their relevant app and models names are displayed in the active language.
 * Permissions are displayed in a table that contain the default model permissions **plus** any custom permissions.
-* Supports view permission for Django 2.1
+* Supports view permission for Django 4.0.3
 * Customize which apps, models to show in the permissions table. You can also set a exclude function for high-end customization.
 * RTL ready, Bootstrap ready.
 * Easy customize-able look.
