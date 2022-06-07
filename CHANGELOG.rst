@@ -1,6 +1,9 @@
 ----------
 CHANGELOG
 ----------
+ v 2.9.1 (7 June 2022)
+  - Django 4 Upgrade. (@youssriaboelseod)
+
  v 2.9 (11 December 2021)
   - Respect model default permission (Case of stalled permission in database due to removed default permissions)
 
