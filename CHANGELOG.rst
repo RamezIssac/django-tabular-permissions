@@ -1,6 +1,9 @@
 ----------
 CHANGELOG
 ----------
+ v 2.9 (11 December 2021)
+  - Respect model default permission (Case of stalled permission in database due to removed default permissions)
+
  v 2.8 (15 September 2020)
   - Changed default of use_for_concrete
 

@@ -5,18 +5,17 @@ Display model permissions in a tabular widget that is user friendly, translatabl
 
 Version
 -------
-2.7 (August 16 2020)
+2.9 (December 10 2021)
 
 Features:
 ---------
 * Permissions and their relevant app and models names are displayed in the active language.
 * Permissions are displayed in a table that contain the default model permissions **plus** any custom permissions.
-* Supports view permission for Django 2.1
+* Supports view permission for Django 4.0.3
 * Customize which apps, models to show in the permissions table. You can also set a exclude function for high-end customization.
 * RTL ready, Bootstrap ready.
 * Easy customize-able look.
-* Django >= 1.11
-* Python 2.7, 3.6, 3.7 & 3.8. Django 1.11, 2.1, 3.0 & 3.1
+* Python 2.7, 3.6, 3.7 & 3.8. Django 1.11, 2.1, 3.0, 3.1, 3.2 , 4
 * Default `FilteredSelectMultiple` widget will appear only if you have custom permissions that are not model related (ie directly created by code or hand)
 
 
@@ -150,6 +149,17 @@ With Custom permission behaviour
     :alt: With Custom permission
 
 -------
+
+Demo:
+-----
+
+To run the demo project in the repo on your local you need
+
+1. Clone the repo;
+2. Create a virtualenv
+3. `pip install django-tabular-permissions`
+4. `python manage.py migrate`
+5. `python manage.py runserver`
 
 Enjoy and feel free to report any bugs or make pull requests.
 
