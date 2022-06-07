@@ -2,7 +2,7 @@
 from __future__ import unicode_literals
 
 from django.db import models
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 
 
 class ModelWithDefaultPermissions(models.Model):
@@ -41,6 +41,5 @@ class ModelWithNoPermissions(models.Model):
 
 
 class ModelWithChangedDefaultPermissions(models.Model):
-
     class Meta:
         default_permissions = ('view',)

@@ -6,8 +6,8 @@ python:
 env:
   - DJANGO=django==1.11.28
   - DJANGO=django==2.2.12
-  - DJANGO=django==3.0.5
-  - DJANGO=django==3.1
+  - DJANGO=django==3.2
+  - DJANGO=django==4.0
 
 before_install:
   - wget https://github.com/mozilla/geckodriver/releases/download/v0.17.0/geckodriver-v0.17.0-linux64.tar.gz

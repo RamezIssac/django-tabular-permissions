@@ -2,7 +2,8 @@
 from __future__ import unicode_literals
 
 from django.apps import AppConfig
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
+
 
 class DemoAppConfig(AppConfig):
     name = 'demo_app'
@@ -14,5 +15,3 @@ class DemoAppConfig(AppConfig):
         dummy_trans = _('Can deliver pizzas')
         dummy_trans = _('Can do stuff')
         dummy_trans = _('Can do more stuff')
-
-
