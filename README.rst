@@ -1,7 +1,23 @@
 django-tabular-permissions
 ##########################
-Display model permissions in a tabular widget that is user friendly, translatable and customizable.
-*Scroll down for screen shots*
+Display django permissions in a user friendly, translatable and customizable widget .
+
+.. image:: https://rasystems.io/static/images/tabular_permissions/tp_1.png
+    :target: https://rasystems.io/static/images/tabular_permissions/tp_1.png
+    :alt: Basic demo
+
+RTL and localized
+
+.. image:: https://rasystems.io/static/images/tabular_permissions/tp_ar.png
+    :target: https://rasystems.io/static/images/tabular_permissions/tp_ar.png
+    :alt: RTL and localized
+
+With Custom permission behaviour
+
+.. image:: https://rasystems.io/static/images/tabular_permissions/tp_extra.png
+    :target: https://rasystems.io/static/images/tabular_permissions/tp_extra.png
+    :alt: With Custom permission
+
 
 Version
 -------
@@ -15,13 +31,9 @@ Features:
 * Customize which apps, models to show in the permissions table. You can also set a exclude function for high-end customization.
 * RTL ready, Bootstrap ready.
 * Easy customize-able look.
-* Python 2.7, 3.6, 3.7 & 3.8. Django 1.11, 2.1, 2.2, 3.0, 3.1, 3.2 , 4.0 .
+* Python 2.7, 3.6, 3.7, 3.8, 3.9 , 3.10. Django 1.11, 2.1, 2.2, 3.0, 3.1, 3.2 , 4.0, 4.1.
 * Default `FilteredSelectMultiple` widget will appear only if you have custom permissions that are not model related (ie directly created by code or hand)
 
-
-
-.. image:: https://travis-ci.org/RamezIssac/django-tabular-permissions.svg?branch=master
-    :target: https://travis-ci.org/RamezIssac/django-tabular-permissions
 
 
 Installation
@@ -48,7 +60,7 @@ then navigate to User and/or Group change form to see `tabular_permissions` in a
 
 Configuration:
 --------------
-Tabular_permissions possible configurations and their default::
+Tabular permissions possible configurations and their default::
 
     TABULAR_PERMISSIONS_CONFIG = {
         'template': 'tabular_permissions/admin/tabular_permissions.html',
@@ -124,31 +136,8 @@ Located at 'static/tabular_permissions/tabular_permissions.js', it have 2 respon
 
 Compatibility:
 --------------
-Version >= 2.0  only supports Django >= 1.11
-For earlier versions of django use django-tabular-permissions 1.0.9.
-
-
-Screenshots:
-------------
-Basic Demo
-
-.. image:: https://rasystems.io/static/images/tabular_permissions/tp_1.png
-    :target: https://rasystems.io/static/images/tabular_permissions/tp_1.png
-    :alt: Basic demo
-
-RTL and localized
-
-.. image:: https://rasystems.io/static/images/tabular_permissions/tp_ar.png
-    :target: https://rasystems.io/static/images/tabular_permissions/tp_ar.png
-    :alt: RTL and localized
-
-With Custom permission behaviour
-
-.. image:: https://rasystems.io/static/images/tabular_permissions/tp_extra.png
-    :target: https://rasystems.io/static/images/tabular_permissions/tp_extra.png
-    :alt: With Custom permission
-
--------
+Current version support from Python 2.7 and up to Python 3.10, and Django from 1.11 to 4.1
+For Django < 1.11, use django-tabular-permissions 1.0.9.
 
 Demo:
 -----
@@ -163,7 +152,6 @@ To run the demo project in the repo on your local you need
 
 Enjoy and feel free to report any bugs or make pull requests.
 
-Cheers ;-)
 
 Cross Reference
 ---------------
@@ -173,4 +161,3 @@ If you like this package, chances are you may like those packages too!
 `Django Slick Reporting <https://github.com/ra-systems/django-slick-reporting>`_ Powerful and Efficient reporting engine with Charting capabilities.
 
 `Django Ra ERP Framework <https://github.com/ra-systems/RA>`_ A framework to build business solutions with ease.
-
