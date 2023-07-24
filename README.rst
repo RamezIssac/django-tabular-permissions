@@ -1,3 +1,4 @@
+
 django-tabular-permissions
 ##########################
 Display django permissions in a user friendly, translatable and customizable widget .
@@ -150,7 +151,23 @@ To run the demo project in the repo on your local you need
 4. `python manage.py migrate`
 5. `python manage.py runserver`
 
-Enjoy and feel free to report any bugs or make pull requests.
+
+Tests
+-----
+
+To run the tests, you need to install the test requirements::
+
+    cd tests
+    pip install -r requirements.txt
+
+Then run::
+
+    python runtests.py
+
+With Coverage ::
+
+        coverage run runtests.py
+        coverage html
 
 
 Cross Reference

@@ -1,6 +1,11 @@
 ----------
 CHANGELOG
 ----------
+ v 2.9.2 (24 July 2023)
+  - Update readme to show how to run tests
+  - update demo project to use Django latest releases
+  - Enhance the tests to cover more.
+
  v 2.9.1 (7 June 2022)
   - Django 4 Upgrade. (@youssriaboelseod)
 
