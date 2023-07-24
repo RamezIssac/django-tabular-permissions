@@ -149,3 +149,5 @@ class TabularPermissionsTestCase(test.TestCase):
         doc = pq(response.content)
         table = doc.find('[name=user_permissions]')
         self.assertEqual(len(table), 1)
+        custom_perm = doc.find("#id__can_do_something")
+        self.assertEqual(len(custom_perm), 1)
