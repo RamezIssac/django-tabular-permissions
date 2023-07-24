@@ -1,5 +1,5 @@
-    (function($){
-        $(document).ready(function () {
+window.onload = function() {
+  (function($){
         $(".related-widget-wrapper:has(table)").addClass('related-widget-wrapper-user-permissions');
         $('#perm_view_select_all').on('change', function () {
             var state = $(this).prop('checked');
@@ -48,5 +48,5 @@
             });
             user_group_permissions.append(output);
         })
-    });
     })(django.jQuery);
+};

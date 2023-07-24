@@ -15,6 +15,7 @@ INSTALLED_APPS = [
     'django.contrib.sites',
 
     'tabular_permissions',
+    "custom_models",
 
 ]
 
@@ -51,6 +52,7 @@ TEMPLATES = [
         'OPTIONS': {
             'context_processors': [
                 'django.template.context_processors.debug',
+                'django.contrib.messages.context_processors.messages',
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.template.context_processors.static',

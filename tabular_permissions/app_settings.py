@@ -10,9 +10,10 @@ TABULAR_PERMISSIONS_CONFIG = {
         'function':'tabular_permissions.helpers.dummy_permissions_exclude'
     },
     'auto_implement': True,
-    'use_for_concrete': True,
+    'use_for_concrete': False,
     'custom_permission_translation': 'tabular_permissions.helpers.custom_permissions_translator',
     'apps_customization_func': 'tabular_permissions.helpers.apps_customization_func',
+    'custom_permissions_customization_func': 'tabular_permissions.helpers.custom_permissions_customization_func',
 }
 user_conf = getattr(settings, 'TABULAR_PERMISSIONS_CONFIG', False)
 
@@ -44,3 +45,4 @@ USE_FOR_CONCRETE = TABULAR_PERMISSIONS_CONFIG['use_for_concrete']
 TRANSLATION_FUNC = import_string(TABULAR_PERMISSIONS_CONFIG['custom_permission_translation'])
 
 APPS_CUSTOMIZATION_FUNC = import_string(TABULAR_PERMISSIONS_CONFIG['apps_customization_func'])
+CUSTOM_PERMISSIONS_CUSTOMIZATION_FUNC = import_string(TABULAR_PERMISSIONS_CONFIG['custom_permissions_customization_func'])

@@ -2,12 +2,12 @@
 from __future__ import unicode_literals
 
 from django.db import models
-from django.utils.translation import ugettext_lazy as _
-
+from django.utils.translation import gettext_lazy as _
 
 
 class ModelWithDefaultPermissions(models.Model):
     name = models.CharField(max_length=100)
+
     class Meta:
         verbose_name = _('Model with all default permissions')
 
@@ -18,7 +18,6 @@ class ModelWithEditedDefaultPermission(models.Model):
     class Meta:
         default_permissions = ('change',)
         verbose_name = _('Model with `change` permissions Only')
-
 
 
 class ModelWithCustomPermissions(models.Model):
@@ -39,3 +38,8 @@ class ModelWithCustomPermissionsNoDefault(models.Model):
 class ModelWithNoPermissions(models.Model):
     class Meta:
         default_permissions = ()
+
+
+class ModelWithChangedDefaultPermissions(models.Model):
+    class Meta:
+        default_permissions = ('view',)

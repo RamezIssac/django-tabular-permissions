@@ -1,6 +1,37 @@
 ----------
 CHANGELOG
 ----------
+ v 2.9.2 (24 July 2023)
+  - Update readme to show how to run tests
+  - update demo project to use Django latest releases
+  - Enhance the tests to cover more.
+
+ v 2.9.1 (7 June 2022)
+  - Django 4 Upgrade. (@youssriaboelseod)
+
+ v 2.9 (11 December 2021)
+  - Respect model default permission (Case of stalled permission in database due to removed default permissions)
+
+ v 2.8 (15 September 2020)
+  - Changed default of use_for_concrete
+
+ v 2.7 (16 August 2020)
+  - Assert Django 3.1 Support.
+  - Adds Django 3.1 to travis matrix.
+
+ v 2.6 (3 April 2020)
+  - Better aim at working with Custom User/Group ModelAdmin out-of-box (Thanks @abahnihi )
+
+ v 2.5 (1 February 2020)
+  - Hinted `collectstatic` in installation docs (#14)
+  - Fixes possible non unique HTML ID. (#13)
+
+ v 2.4 (19 December 2019)
+  - Added `custom_permissions_customization_func` to control the extra permissions not displayed on main permissions table.
+
+ v 2.3 (25 July 2019)
+  - Added native javascript event to wait for the full page load to start (Thanks @Filipe-Souza)
+
  v 2.2 (8 October 2018)
   - Adds view permission supporting Django 2.1
 
