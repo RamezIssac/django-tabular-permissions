@@ -30,12 +30,12 @@ class GroupTabularPermissionsMixin(object):
 
 try:
     UserAdminModel = admin.site._registry[User].__class__
-except:
+except:  # pragma: no cover
     UserAdminModel = DjUserAdmin
 
 try:
     GroupAdminModel = admin.site._registry[Group].__class__
-except:
+except:  # pragma: no cover
     GroupAdminModel = DjGroupAdmin
 
 
@@ -55,5 +55,6 @@ if app_settings.AUTO_IMPLEMENT:
         admin.site.register(Group, TabularPermissionsGroupAdmin)
 
     except:
-        raise ImproperlyConfigured('Please make sure that django.contrib.auth '
-                                   'comes before tabular_permissions in INSTALLED_APPS')
+        raise ImproperlyConfigured(
+            'Please make sure that django.contrib.auth (Or the app containing your custom User model) '
+            'comes before tabular_permissions in INSTALLED_APPS; Or set AUTO_IMPLEMENT to False in your settings.')

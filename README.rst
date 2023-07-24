@@ -31,7 +31,7 @@ Features:
 * Customize which apps, models to show in the permissions table. You can also set a exclude function for high-end customization.
 * RTL ready, Bootstrap ready.
 * Easy customize-able look.
-* Python 2.7, 3.6, 3.7, 3.8, 3.9 , 3.10. Django 1.11, 2.1, 2.2, 3.0, 3.1, 3.2 , 4.0, 4.1.
+* Python 2.7, 3.6, 3.7, 3.8, 3.9 , 3.10. Django 1.11, 2.1, 2.2, 3.0, 3.1, 3.2 , 4.0, 4.1, 4.2
 * Default `FilteredSelectMultiple` widget will appear only if you have custom permissions that are not model related (ie directly created by code or hand)
 
 

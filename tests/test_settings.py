@@ -15,6 +15,7 @@ INSTALLED_APPS = [
     'django.contrib.sites',
 
     'tabular_permissions',
+    "custom_models",
 
 ]
 
