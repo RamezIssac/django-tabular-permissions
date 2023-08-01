@@ -8,19 +8,19 @@ from . import app_settings
 User = get_user_model()
 
 
-class UserTabularPermissionsMixin(object):
+class UserTabularPermissionsMixin:
 
     def formfield_for_manytomany(self, db_field, request=None, **kwargs):
-        field = super(UserTabularPermissionsMixin, self).formfield_for_manytomany(db_field, request, **kwargs)
+        field = super().formfield_for_manytomany(db_field, request, **kwargs)
         if db_field.name == 'user_permissions':
             field.widget = TabularPermissionsWidget(db_field.verbose_name, db_field.name in self.filter_vertical)
             field.help_text = ''
         return field
 
 
-class GroupTabularPermissionsMixin(object):
+class GroupTabularPermissionsMixin:
     def formfield_for_manytomany(self, db_field, request=None, **kwargs):
-        field = super(GroupTabularPermissionsMixin, self).formfield_for_manytomany(db_field, request, **kwargs)
+        field = super().formfield_for_manytomany(db_field, request, **kwargs)
         if db_field.name == 'permissions':
             field.widget = TabularPermissionsWidget(db_field.verbose_name, db_field.name in self.filter_vertical,
                                                     'permissions')

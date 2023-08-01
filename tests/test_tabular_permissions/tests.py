@@ -1,4 +1,3 @@
-from __future__ import unicode_literals
 from django import test
 from django.contrib.auth import get_user_model
 from django.contrib.auth.models import Permission
@@ -124,7 +123,7 @@ class TabularPermissionsTestCase(test.TestCase):
 
     @classmethod
     def setUpClass(cls):
-        super(TabularPermissionsTestCase, cls).setUpClass()
+        super().setUpClass()
         cls.user = User.objects.create_superuser(username='super', password='secret', email='email@domain.com')
 
     def test_visible_on_group_admin(self):
@@ -132,7 +131,7 @@ class TabularPermissionsTestCase(test.TestCase):
             Test tabular_permissions visible on GroupAdmin with right data-input-name
             """
             self.client.login(username='super', password='secret')
-            response = self.client.get((reverse('admin:auth_group_add')))
+            response = self.client.get(reverse('admin:auth_group_add'))
             self.assertEqual(response.status_code, 200)
             doc = pq(response.content)
             table = doc.find('#tabular_permissions')
