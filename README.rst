@@ -65,6 +65,7 @@ Tabular permissions possible configurations and their default::
 
     TABULAR_PERMISSIONS_CONFIG = {
         'template': 'tabular_permissions/admin/tabular_permissions.html',
+        'js_file': 'tabular_permissions/tabular_permissions.js',
         'exclude': {
             'override': False,
             'apps': [],
@@ -82,6 +83,9 @@ Tabular permissions possible configurations and their default::
 `template`
   the template which contains the permissions table, you can always customize this template by extending or overriding.
   Notice that there is a `style` block which you can override to easily edit the css.
+
+`js_file`
+  you can change this file for add your custom javascript code. Read how it works below.
 
 `exclude`
   Control which apps, models to show in the permissions table.
