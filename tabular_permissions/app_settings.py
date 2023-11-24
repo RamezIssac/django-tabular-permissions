@@ -3,6 +3,7 @@ from django.utils.module_loading import import_string
 
 TABULAR_PERMISSIONS_CONFIG = {
     'template': 'tabular_permissions/admin/tabular_permissions.html',
+    'js_file': 'tabular_permissions/tabular_permissions.js',
     'exclude': {
         'override': False,
         'apps': [],
@@ -26,6 +27,7 @@ if user_conf:
 
 AUTO_IMPLEMENT = TABULAR_PERMISSIONS_CONFIG['auto_implement']
 TEMPLATE = TABULAR_PERMISSIONS_CONFIG['template']
+JS_FILE = TABULAR_PERMISSIONS_CONFIG['js_file']
 
 _base_exclude_apps = ['sessions', 'contenttypes', 'admin']
 user_exclude = TABULAR_PERMISSIONS_CONFIG['exclude']

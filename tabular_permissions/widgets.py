@@ -11,7 +11,7 @@ from django.utils.encoding import force_str
 from django.utils.safestring import mark_safe
 from .app_settings import EXCLUDE_FUNCTION, EXCLUDE_APPS, \
     EXCLUDE_MODELS, TEMPLATE, USE_FOR_CONCRETE, TRANSLATION_FUNC, APPS_CUSTOMIZATION_FUNC, \
-    CUSTOM_PERMISSIONS_CUSTOMIZATION_FUNC
+    CUSTOM_PERMISSIONS_CUSTOMIZATION_FUNC, JS_FILE
 from .helpers import get_perm_name
 
 
@@ -26,7 +26,7 @@ def get_reminder_permissions_iterator(choices, reminder_perms):
 
 class TabularPermissionsWidget(FilteredSelectMultiple):
     class Media:
-        js = ('tabular_permissions/tabular_permissions.js',)
+        js = (JS_FILE,)
 
     def __init__(self, verbose_name, is_stacked, input_name='user_permissions', attrs=None, choices=()):
         super().__init__(verbose_name, is_stacked, attrs, choices)
