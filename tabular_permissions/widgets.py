@@ -109,6 +109,7 @@ class TabularPermissionsWidget(FilteredSelectMultiple):
                     app_dict['models'][model_name] = {
                         'model_name': model_name,
                         'model': model,
+                        'label': force_str(model._meta.label_lower.replace('.', '_')),
                         'verbose_name_plural': force_str(model._meta.verbose_name_plural),
                         'verbose_name': force_str(model._meta.verbose_name),
                         'view_perm_id': view_perm_id,
