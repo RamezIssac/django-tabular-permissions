@@ -1,52 +1,82 @@
-window.onload = function() {
-  (function($){
-        $(".related-widget-wrapper:has(table)").addClass('related-widget-wrapper-user-permissions');
-        $('#perm_view_select_all').on('change', function () {
-            var state = $(this).prop('checked');
-            $('#tabular_permissions').find('tr td.view').find('input').each(function (i, e) {
-                $(e).prop('checked', state)
-            })
+'use strict';
+{
+    window.addEventListener('load', function(e) {
+
+        // Look for view select all
+        const perm_view_select_all = this.document.getElementById('perm_view_select_all');
+        perm_view_select_all.addEventListener('change', function(){
+            const state = this.checked;
+            const perm_inputs = document.getElementById("tabular_permissions").querySelectorAll("td.view");
+            perm_inputs.forEach(element => {
+                element.getElementsByTagName("input")[0].checked = state;
+            });
         });
-        $('#perm_add_select_all').on('change', function () {
-            var state = $(this).prop('checked');
-            $('#tabular_permissions').find('tr td.add').find('input').each(function (i, e) {
-                $(e).prop('checked', state)
-            })
+
+        // Look for add select all
+        const perm_add_select_all = this.document.getElementById('perm_add_select_all');
+        perm_add_select_all.addEventListener('change', function(){
+            const state = this.checked;
+            const perm_inputs = document.getElementById("tabular_permissions").querySelectorAll("td.add");
+            perm_inputs.forEach(element => {
+                element.getElementsByTagName("input")[0].checked = state;
+            });
+        }); 
+
+        // Look for change select all
+        const perm_change_select_all = this.document.getElementById('perm_change_select_all');
+        perm_change_select_all.addEventListener('change', function(){
+            const state = this.checked;
+            const perm_inputs = document.getElementById("tabular_permissions").querySelectorAll("td.change");
+            perm_inputs.forEach(element => {
+                element.getElementsByTagName("input")[0].checked = state;
+            });
         });
-        $('#perm_change_select_all').on('change', function () {
-            var state = $(this).prop('checked');
-            $('#tabular_permissions').find('tr td.change').find('input').each(function (i, e) {
-                $(e).prop('checked', state)
-            })
+
+        // Look for change select all
+        const perm_delete_select_all = document.getElementById('perm_delete_select_all');
+        perm_delete_select_all.addEventListener('change', function(){
+            const state = this.checked;
+            const perm_inputs = document.getElementById("tabular_permissions").querySelectorAll("td.delete");
+            perm_inputs.forEach(element => {
+                element.getElementsByTagName("input")[0].checked = state;
+            });
         });
-        $('#perm_delete_select_all').on('change', function () {
-            var state = $(this).prop('checked');
-            $('#tabular_permissions').find('tr td.delete').find('input').each(function (i, e) {
-                $(e).prop('checked', state)
-            })
+
+        // Look for select all in row
+        const select_all_row = this.document.querySelectorAll(".select-all.select-row");
+        select_all_row.forEach(input => {
+            input.addEventListener('change', function(){
+                const tr_parent = this.parentElement.parentElement.parentElement;
+                const checkboxes = tr_parent.querySelectorAll("input.checkbox:not(.select-all)");
+
+                checkboxes.forEach(element => {
+                    element.checked = this.checked;
+                });
+            });
         });
-        $('.select-all.select-row').on('change', function(){
-            var $this = $(this);
-            $this.parents('tr').find('.checkbox').not('.select-all').each(function(i,elem){
-                $(elem).prop('checked', $this.prop('checked'));
-            })
-        });
-        $('form').on('submit', function () {
-            var user_perms = [];
-            var table_permissions = $('#tabular_permissions');
-            var input_name = table_permissions.attr('data-input-name');
-            table_permissions.find("input[type=checkbox]").not('.select-all').each(function (i, elem) {
-                var $elem = $(elem);
-                if ($(elem).prop('checked')) {
-                    user_perms.push($elem.attr('data-perm-id'))
+
+        // Submit form 
+        const form = this.document.querySelectorAll("form:not(#logout-form)")[0];
+        
+        form.addEventListener('submit', function(){
+            const user_perms = [];
+            const table_permissions = document.getElementById("tabular_permissions");
+            const input_name = table_permissions.getAttribute("data-input-name");
+            
+            
+            table_permissions.querySelectorAll("input[type=checkbox]:not(.select-all)").forEach(element => {
+                if(element.checked){
+                    user_perms.push(element.getAttribute("data-perm-id"));
                 }
             });
-            var user_group_permissions = $('[name=' + input_name +']');
-            var output = [];
-            $.each(user_perms, function (key, value) {
-                output.push('<option value="' + value + '" selected="selected" style="display:none"></option>');
+            
+            const user_group_permissions = document.querySelector('[name=' + input_name + ']');
+            Object.entries(user_perms).forEach(entry => {
+                const [key, value] = entry;
+                user_group_permissions.insertAdjacentHTML('beforeend',
+                '<option value="' + value + '" selected="selected" style="display:none"></option>')
             });
-            user_group_permissions.append(output);
-        })
-    })(django.jQuery);
-};
+        });
+
+    });
+}
