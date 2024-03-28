@@ -1,7 +1,9 @@
 from collections import OrderedDict
+from itertools import chain
 
 from django import VERSION
 from django.apps import apps
+from django.contrib.auth import get_permission_codename
 from django.contrib.auth.models import Permission
 from django.contrib.admin.widgets import FilteredSelectMultiple
 from django.contrib.contenttypes.models import ContentType
@@ -77,9 +79,21 @@ class TabularPermissionsWidget(FilteredSelectMultiple):
                                                      False) if 'change' in model._meta.default_permissions else False
                 delete_perm_id = codename_id_map.get(f'{delete_perm_name}_{ct_id}',
                                                      False) if 'delete' in model._meta.default_permissions else False
-                if model._meta.permissions:
+
+                extra_default_permissions = []
+                for action in model._meta.default_permissions:
+                    if action in {'view', 'add', 'change', 'delete'}:
+                        continue
+                    extra_default_permissions.append(
+                        (
+                            get_permission_codename(action, model._meta),
+                            "Can %s %s" % (action, model._meta.verbose_name_raw),
+                        )
+                    )
+
+                if model._meta.permissions or extra_default_permissions:
                     custom_permissions_available = True
-                    for codename, perm_name in model._meta.permissions:
+                    for codename, perm_name in chain(model._meta.permissions, extra_default_permissions):
                         c_perm_id = codename_id_map.get(f'{codename}_{ct_id}', False)
                         verbose_name = TRANSLATION_FUNC(codename, perm_name, ct_id)
                         model_custom_permissions.append(
