@@ -31,7 +31,8 @@ window.onload = function() {
                 $(elem).prop('checked', $this.prop('checked'));
             })
         });
-        $('form').on('submit', function () {
+        setTimeout(
+            () => $('form').on('submit', function () {
             var user_perms = [];
             var table_permissions = $('#tabular_permissions');
             var input_name = table_permissions.attr('data-input-name');
@@ -47,6 +48,9 @@ window.onload = function() {
                 output.push('<option value="' + value + '" selected="selected" style="display:none"></option>');
             });
             user_group_permissions.append(output);
-        })
+        }),
+            0
+        )
+
     })(django.jQuery);
 };
